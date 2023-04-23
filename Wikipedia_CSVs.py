@@ -5,9 +5,6 @@ import os
 
 folder = 'WikiCSV'
 outputFile = 'DataSet.text'
-doWrite = True
-
-print("Warning doWrite is set to:", doWrite)
 
 #open file
 f = open(outputFile, 'w') # 'w' for overwrite, 'a' for append
