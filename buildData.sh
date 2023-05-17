@@ -1,8 +1,8 @@
 #!/bin/bash
 
-CYAN= '\033[0;36m'
-WHITE= '\033[0;37m' 
-GREEN= '\033[0;32m'   
+CYAN="\033[0;36m"
+WHITE="\033[0;37m"
+GREEN="\033[0;32m" 
 
 echo -e "# ${White}Author  :  ${Cyan}Max Lawton${White}"
 echo -e "# ${White}Version :  ${Cyan}May 16, 2023${White}"

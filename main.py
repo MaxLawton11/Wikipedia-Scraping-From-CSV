@@ -48,4 +48,4 @@ for cell, i in zip(data, range(len(data))) :
     f.write('\n\n')
     
     # for ui
-    print(f'# Wrote : {cell:<5} | #{i} of {n_rows}')
+    print(f'# Wrote : {cell:<5} | #{i+1} of {n_rows}')
