@@ -5,13 +5,14 @@ import os
 
 folder = 'WikiCSV'
 outputFile = 'DataSet.text'
+doWrite = False
 
 #open file
 f = open(outputFile, 'w') # 'w' for overwrite, 'a' for append
 
 #loop though files in folder
 for file in os.listdir(folder) :
-    data = read_csv(f"{folder}/{file}")
+    data = read_csv(file)
     #get all data from colum in csv
     #Note: Top row of file must be "===,"
     data = data['==='].tolist()
