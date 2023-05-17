@@ -1,1 +1,672 @@
-nothing here yet
+From "Quantum computing" ==> """
+thumb|IBM Q System One, a quantum computer with 20 superconducting qubits
+A quantum computer is a computer that exploits quantum mechanical phenomena.
+At small scales, physical matter exhibits properties of both particles and waves, and quantum computing leverages this behavior using specialized hardware.
+Classical physics cannot explain the operation of these quantum devices, and a scalable quantum computer could perform some calculations exponentially faster than any modern "classical" computer.
+In particular, a large-scale quantum computer could break widely used encryption schemes and aid physicists in performing physical simulations; however, the current state of the art is largely experimental and impractical.
+The basic unit of information in quantum computing is the qubit, similar to the bit in traditional digital electronics. Unlike a classical bit, a qubit can exist in a superposition of its two "basis" states, which loosely means that it is in both states simultaneously. When measuring a qubit, the result is a probabilistic output of a classical bit. If a quantum computer manipulates the qubit in a particular way, wave interference effects can amplify the desired measurement results. The design of quantum algorithms involves creating procedures that allow a quantum computer to perform calculations efficiently.
+Physically engineering high-quality qubits has proven challenging.
+If a physical qubit is not sufficiently isolated from its environment, it suffers from quantum decoherence, introducing noise into calculations.
+National governments have invested heavily in experimental research that aims to develop scalable qubits with longer coherence times and lower error rates.
+Two of the most promising technologies are superconductors (which isolate an electrical current by eliminating electrical resistance) and ion traps (which confine a single atomic particle using electromagnetic fields).
+Any computational problem that can be solved by a classical computer can also be solved by a quantum computer. Conversely, any problem that can be solved by a quantum computer can also be solved by a classical computer, at least in principle given enough time. In other words, quantum computers obey the Church–Turing thesis. This means that while quantum computers provide no additional advantages over classical computers in terms of computability, quantum algorithms for certain problems have significantly lower time complexities than corresponding known classical algorithms. Notably, quantum computers are believed to be able to solve certain problems quickly that no classical computer could solve in any feasible amount of time—a feat known as "quantum supremacy." The study of the computational complexity of problems with respect to quantum computers is known as quantum complexity theory.
+ History 
+thumb|The Mach–Zehnder interferometer shows that photons can exhibit wave-like interference.|upright=0.9
+For many years, the fields of quantum mechanics and computer science formed distinct academic communities. Modern quantum theory developed in the 1920s to explain the waveparticle duality observed at atomic scales, and digital computers emerged in the following decades to replace human computers for tedious calculations. Both disciplines had practical applications during World War II; computers played a major role in wartime cryptography, and quantum physics was essential for the nuclear physics used in the Manhattan Project.
+As physicists applied quantum mechanical models to computational problems and swapped digital bits for qubits, the fields of quantum mechanics and computer science began to converge.
+In 1980, Paul Benioff introduced the quantum Turing machine, which uses quantum theory to describe a simplified computer.
+When digital computers became faster, physicists faced an exponential increase in overhead when simulating quantum dynamics, prompting Yuri Manin and Richard Feynman to independently suggest that hardware based on quantum phenomena might be more efficient for computer simulation.
+In a 1984 paper, Charles Bennett and Gilles Brassard applied quantum theory to cryptography protocols and demonstrated that quantum key distribution could enhance information security.
+thumb|Peter Shor (pictured here in 2017) showed in 1994 that a scalable quantum computer would be able to break RSA encryption.|upright=0.9
+Quantum algorithms then emerged for solving oracle problems, such as Deutsch's algorithm in 1985, the BernsteinVazirani algorithm in 1993, and Simon's algorithm in 1994.
+These algorithms did not solve practical problems, but demonstrated mathematically that one could gain more information by querying a black box with a quantum state in superposition, sometimes referred to as quantum parallelism.
+Peter Shor built on these results with his 1994 algorithms for breaking the widely used RSA and DiffieHellman encryption protocols, which drew significant attention to the field of quantum computing.
+In 1996, Grover's algorithm established a quantum speedup for the widely applicable unstructured search problem. The same year, Seth Lloyd proved that quantum computers could simulate quantum systems without the exponential overhead present in classical simulations, validating Feynman's 1982 conjecture.
+Over the years, experimentalists have constructed small-scale quantum computers using trapped ions and superconductors.
+In 1998, a two-qubit quantum computer demonstrated the feasibility of the technology, and subsequent experiments have increased the number of qubits and reduced error rates.
+In 2019, Google AI and NASA announced that they had achieved quantum supremacy with a 54-qubit machine, performing a computation that is impossible for any classical computer. However, the validity of this claim is still being actively researched.
+The threshold theorem shows how increasing the number of qubits can mitigate errors, yet fully fault-tolerant quantum computing remains "a rather distant dream".
+According to some researchers, noisy intermediate-scale quantum (NISQ) machines may have specialized uses in the near future, but noise in quantum gates limits their reliability.
+In recent years, investment in quantum computing research has increased in the public and private sectors.
+As one consulting firm summarized,
+ Quantum information processing 
+Computer engineers typically describe a modern computer's operation in terms of classical electrodynamics.
+Within these "classical" computers, some components (such as semiconductors and random number generators) may rely on quantum behavior, but these components are not isolated from their environment, so any quantum information quickly decoheres.
+While programmers may depend on probability theory when designing a randomized algorithm, quantum mechanical notions like superposition and interference are largely irrelevant for program analysis.
+Quantum programs, in contrast, rely on precise control of coherent quantum systems. Physicists describe these systems mathematically using linear algebra. Complex numbers model probability amplitudes, vectors model quantum states, and matrices model the operations that can be performed on these states. Programming a quantum computer is then a matter of composing operations in such a way that the resulting program computes a useful result in theory and is implementable in practice.
+The prevailing model of quantum computation describes the computation in terms of a network of quantum logic gates. This model is a complex linear-algebraic generalization of boolean circuits.
+ Quantum information 
+The qubit serves as the basic unit of quantum information.
+It represents a two-state system, just like a classical bit, except that it can exist in a superposition of its two states.
+In one sense, a superposition is like a probability distribution over the two values.
+However, a quantum computation can be influenced by both values at once, inexplicable by either state individually.
+In this sense, a "superposed" qubit stores both values simultaneously.
+A two-dimensional vector mathematically represents a qubit state. Physicists typically use Dirac notation for quantum mechanical linear algebra, writing   for a vector labeled ψ. Because a qubit is a two-state system, any qubit state takes the form , where  and  are the standard basis states, and α and β are the probability amplitudes. If either α or β is zero, the qubit is effectively a classical bit; when both are nonzero, the qubit is in superposition. Such a quantum state vector acts similarly to a (classical) probability vector, with one key difference: unlike probabilities, probability  are not necessarily positive numbers. Negative amplitudes allow for destructive wave interference.
+When a qubit is measured in the standard basis, the result is a classical bit.
+The Born rule describes the norm-squared correspondence between amplitudes and probabilitieswhen measuring a qubit , the state collapses to  with probability 2, or to  with probability 2.
+Any valid qubit state has coefficients α and β such that .
+As an example, measuring the qubit  would produce either  or  with equal probability.
+Each additional qubit doubles the dimension of the state space.
+As an example, the vector  represents a two-qubit state, a tensor product of the qubit  with the qubit .
+This vector inhabits a four-dimensional vector space spanned by the basis vectors , , , and .
+The Bell state  is impossible to decompose into the tensor product of two individual qubitsthe two qubits are entangled because their probability amplitudes are correlated.
+In general, the vector space for an n-qubit system is 2n-dimensional, and this makes it challenging for a classical computer to simulate a quantum one: representing a 100-qubit system requires storing 2100 classical values.
+ Unitary operators 
+The state of this one-qubit quantum memory can be manipulated by applying quantum logic gates, analogous to how classical memory can be manipulated with classical logic gates. One important gate for both classical and quantum computation is the NOT gate, which can be represented by a matrix
+Mathematically, the application of such a logic gate to a quantum state vector is modelled with matrix multiplication. Thus
+  and .
+The mathematics of single qubit gates can be extended to operate on multi-qubit quantum memories in two important ways. One way is simply to select a qubit and apply that gate to the target qubit while leaving the remainder of the memory unaffected. Another way is to apply the gate to its target only if another part of the memory is in a desired state. These two choices can be illustrated using another example. The possible states of a two-qubit quantum memory are
+The CNOT gate can then be represented using the following matrix:
+As a mathematical consequence of this definition, , , , and . In other words, the CNOT applies a NOT gate ( from before) to the second qubit if and only if the first qubit is in the state . If the first qubit is , nothing is done to either qubit.
+In summary, a quantum computation can be described as a network of quantum logic gates and measurements. However, any measurement can be deferred to the end of quantum computation, though this deferment may come at a computational cost, so most quantum circuits depict a network consisting only of quantum logic gates and no measurements.
+ Quantum parallelism 
+Quantum parallelism refers to the ability of quantum computers to evaluate a function for multiple input values simultaneously. This can be achieved by preparing a quantum system in a superposition of input states, and applying a unitary transformation that encodes the function to be evaluated. The resulting state encodes the function's output values for all input values in the superposition, allowing for the computation of multiple outputs simultaneously. This property is key to the speedup of many quantum algorithms.
+ Quantum programming  
+There are a number of models of computation for quantum computing, distinguished by the basic elements in which the computation is decomposed.
+ Gate array  
+thumb|A quantum circuit diagram implementing a Toffoli gate from more primitive gates|upright=1.1
+A quantum gate array decomposes computation into a sequence of few-qubit quantum gates. A quantum computation can be described as a network of quantum logic gates and measurements. However, any measurement can be deferred to the end of quantum computation, though this deferment may come at a computational cost, so most quantum circuits depict a network consisting only of quantum logic gates and no measurements.
+Any quantum computation (which is, in the above formalism, any unitary matrix of size  over  qubits) can be represented as a network of quantum logic gates from a fairly small family of gates. A choice of gate family that enables this construction is known as a universal gate set, since a computer that can run such circuits is a universal quantum computer. One common such set includes all single-qubit gates as well as the CNOT gate from above. This means any quantum computation can be performed by executing a sequence of single-qubit gates together with CNOT gates. Though this gate set is infinite, it can be replaced with a finite gate set by appealing to the Solovay-Kitaev theorem.
+ Measurement-based quantum computing 
+A measurement-based quantum computer decomposes computation into a sequence of Bell state measurements and single-qubit quantum gates applied to a highly entangled initial state (a cluster state), using a technique called quantum gate teleportation.
+ Adiabatic quantum computing 
+An adiabatic quantum computer, based on quantum annealing, decomposes computation into a slow continuous transformation of an initial Hamiltonian into a final Hamiltonian, whose ground states contain the solution.
+ Topological quantum computing 
+A topological quantum computer decomposes computation into the braiding of anyons in a 2D lattice.
+ Quantum Turing machine 
+The quantum Turing machine is theoretically important but the physical implementation of this model is not feasible. All of these models of computation—quantum circuits, one-way quantum computation, adiabatic quantum computation, and topological quantum computation—have been shown to be equivalent to the quantum Turing machine; given a perfect implementation of one such quantum computer, it can simulate all the others with no more than polynomial overhead. This equivalence need not hold for practical quantum computers, since the overhead of simulation may be too large to be practical.
+ Communication 
+Quantum cryptography could potentially fulfill some of the functions of public key cryptography. Quantum-based cryptographic systems could, therefore, be more secure than traditional systems against quantum hacking.
+ Algorithms 
+Progress in finding quantum algorithms typically focuses on this quantum circuit model, though exceptions like the quantum adiabatic algorithm exist. Quantum algorithms can be roughly categorized by the type of speedup achieved over corresponding classical algorithms.Quantum Algorithm Zoo  – Stephen Jordan's Homepage
+Quantum algorithms that offer more than a polynomial speedup over the best-known classical algorithm include Shor's algorithm for factoring and the related quantum algorithms for computing discrete logarithms, solving Pell's equation, and more generally solving the hidden subgroup problem for abelian finite groups. These algorithms depend on the primitive of the quantum Fourier transform. No mathematical proof has been found that shows that an equally fast classical algorithm cannot be discovered, but evidence suggests that this is unlikely. Certain oracle problems like Simon's problem and the Bernstein–Vazirani problem do give provable speedups, though this is in the quantum query model, which is a restricted model where lower bounds are much easier to prove and doesn't necessarily translate to speedups for practical problems.
+Other problems, including the simulation of quantum physical processes from chemistry and solid-state physics, the approximation of certain Jones polynomials, and the quantum algorithm for linear systems of equations have quantum algorithms appearing to give super-polynomial speedups and are BQP-complete. Because these problems are BQP-complete, an equally fast classical algorithm for them would imply that no quantum algorithm gives a super-polynomial speedup, which is believed to be unlikely.
+Some quantum algorithms, like Grover's algorithm and amplitude amplification, give polynomial speedups over corresponding classical algorithms. Though these algorithms give comparably modest quadratic speedup, they are widely applicable and thus give speedups for a wide range of problems. Many examples of provable quantum speedups for query problems are related to Grover's algorithm, including Brassard, Høyer, and Tapp's algorithm for finding collisions in two-to-one functions, which uses Grover's algorithm, and Farhi, Goldstone, and Gutmann's algorithm for evaluating NAND trees, which is a variant of the search problem.
+ Post-quantum cryptography 
+A notable application of quantum computation is for attacks on cryptographic systems that are currently in use. Integer factorization, which underpins the security of public key cryptographic systems, is believed to be computationally infeasible with an ordinary computer for large integers if they are the product of few prime numbers (e.g., products of two 300-digit primes). By comparison, a quantum computer could solve this problem exponentially faster using Shor's algorithm to find its factors. This ability would allow a quantum computer to break many of the cryptographic systems in use today, in the sense that there would be a polynomial time (in the number of digits of the integer) algorithm for solving the problem. In particular, most of the popular public key ciphers are based on the difficulty of factoring integers or the discrete logarithm problem, both of which can be solved by Shor's algorithm. In particular, the RSA, Diffie–Hellman, and elliptic curve Diffie–Hellman algorithms could be broken. These are used to protect secure Web pages, encrypted email, and many other types of data. Breaking these would have significant ramifications for electronic privacy and security.
+Identifying cryptographic systems that may be secure against quantum algorithms is an actively researched topic under the field of post-quantum cryptography.See also pqcrypto.org, a bibliography maintained by Daniel J. Bernstein and Tanja Lange on cryptography not known to be broken by quantum computing. Some public-key algorithms are based on problems other than the integer factorization and discrete logarithm problems to which Shor's algorithm applies, like the McEliece cryptosystem based on a problem in coding theory. Lattice-based cryptosystems are also not known to be broken by quantum computers, and finding a polynomial time algorithm for solving the dihedral hidden subgroup problem, which would break many lattice based cryptosystems, is a well-studied open problem. It has been proven that applying Grover's algorithm to break a symmetric (secret key) algorithm by brute force requires time equal to roughly 2n/2 invocations of the underlying cryptographic algorithm, compared with roughly 2n in the classical case, meaning that symmetric key lengths are effectively halved: AES-256 would have the same security against an attack using Grover's algorithm that AES-128 has against classical brute-force search (see Key size).
+ Search problems  
+The most well-known example of a problem that allows for a polynomial quantum speedup is unstructured search, which involves finding a marked item out of a list of  items in a database. This can be solved by Grover's algorithm using  queries to the database, quadratically fewer than the  queries required for classical algorithms. In this case, the advantage is not only provable but also optimal: it has been shown that Grover's algorithm gives the maximal possible probability of finding the desired element for any number of oracle lookups.
+Problems that can be efficiently addressed with Grover's algorithm have the following properties:
+There is no searchable structure in the collection of possible answers,
+The number of possible answers to check is the same as the number of inputs to the algorithm, and
+There exists a boolean function that evaluates each input and determines whether it is the correct answer
+For problems with all these properties, the running time of Grover's algorithm on a quantum computer scales as the square root of the number of inputs (or elements in the database), as opposed to the linear scaling of classical algorithms. A general class of problems to which Grover's algorithm can be applied is Boolean satisfiability problem, where the database through which the algorithm iterates is that of all possible answers. An example and possible application of this is a password cracker that attempts to guess a password. Breaking symmetric ciphers with this algorithm is of interest to government agencies.
+ Simulation of quantum systems 
+Since chemistry and nanotechnology rely on understanding quantum systems, and such systems are impossible to simulate in an efficient manner classically, quantum simulation may be an important application of quantum computing. Quantum simulation could also be used to simulate the behavior of atoms and particles at unusual conditions such as the reactions inside a collider.
+About 2% of the annual global energy output is used for nitrogen fixation to produce ammonia for the Haber process in the agricultural fertilizer industry (even though naturally occurring organisms also produce ammonia). Quantum simulations might be used to understand this process and increase the energy efficiency of production.
+ Quantum annealing  
+Quantum annealing relies on the adiabatic theorem to undertake calculations. A system is placed in the ground state for a simple Hamiltonian, which slowly evolves to a more complicated Hamiltonian whose ground state represents the solution to the problem in question. The adiabatic theorem states that if the evolution is slow enough the system will stay in its ground state at all times through the process. Adiabatic optimization may be helpful for solving computational biology problems.
+ Machine learning 
+Since quantum computers can produce outputs that classical computers cannot produce efficiently, and since quantum computation is fundamentally linear algebraic, some express hope in developing quantum algorithms that can speed up machine learning tasks.
+For example, the quantum algorithm for linear systems of equations, or "HHL Algorithm", named after its discoverers Harrow, Hassidim, and Lloyd, is believed to provide speedup over classical counterparts. Some research groups have recently explored the use of quantum annealing hardware for training Boltzmann machines and deep neural networks.
+Deep generative chemistry models emerge as powerful tools to expedite drug discovery. However, the immense size and complexity of the structural space of all possible drug-like molecules pose significant obstacles, which could be overcome in the future by quantum computers. Quantum computers are naturally good for solving complex quantum many-body problems and thus may be instrumental in applications involving quantum chemistry. Therefore, one can expect that quantum-enhanced generative models including quantum GANs may eventually be developed into ultimate generative chemistry algorithms.
+ Engineering 
+thumb|A wafer of adiabatic quantum computers
+ Challenges 
+There are a number of technical challenges in building a large-scale quantum computer. Physicist David DiVincenzo has listed these requirements for a practical quantum computer:
+ Physically scalable to increase the number of qubits
+ Qubits that can be initialized to arbitrary values
+ Quantum gates that are faster than decoherence time
+ Universal gate set
+ Qubits that can be read easily.
+Sourcing parts for quantum computers is also very difficult. Superconducting quantum computers, like those constructed by Google and IBM, need helium-3, a nuclear research byproduct, and special superconducting cables made only by the Japanese company Coax Co.
+The control of multi-qubit systems requires the generation and coordination of a large number of electrical signals with tight and deterministic timing resolution. This has led to the development of quantum controllers that enable interfacing with the qubits. Scaling these systems to support a growing number of qubits is an additional challenge.
+ Decoherence  
+One of the greatest challenges involved with constructing quantum computers is controlling or removing quantum decoherence. This usually means isolating the system from its environment as interactions with the external world cause the system to decohere. However, other sources of decoherence also exist. Examples include the quantum gates, and the lattice vibrations and background thermonuclear spin of the physical system used to implement the qubits. Decoherence is irreversible, as it is effectively non-unitary, and is usually something that should be highly controlled, if not avoided. Decoherence times for candidate systems in particular, the transverse relaxation time T2 (for NMR and MRI technology, also called the dephasing time), typically range between nanoseconds and seconds at low temperature.  Currently, some quantum computers require their qubits to be cooled to 20 millikelvin (usually using a dilution refrigerator) in order to prevent significant decoherence. A 2020 study argues that ionizing radiation such as cosmic rays can nevertheless cause certain systems to decohere within milliseconds.
+As a result, time-consuming tasks may render some quantum algorithms inoperable, as attempting to maintain the state of qubits for a long enough duration will eventually corrupt the superpositions.
+These issues are more difficult for optical approaches as the timescales are orders of magnitude shorter and an often-cited approach to overcoming them is optical pulse shaping. Error rates are typically proportional to the ratio of operating time to decoherence time, hence any operation must be completed much more quickly than the decoherence time.
+As described in the threshold theorem, if the error rate is small enough, it is thought to be possible to use quantum error correction to suppress errors and decoherence. This allows the total calculation time to be longer than the decoherence time if the error correction scheme can correct errors faster than decoherence introduces them. An often-cited figure for the required error rate in each gate for fault-tolerant computation is 10−3, assuming the noise is depolarizing.
+Meeting this scalability condition is possible for a wide range of systems. However, the use of error correction brings with it the cost of a greatly increased number of required qubits. The number required to factor integers using Shor's algorithm is still polynomial, and thought to be between L and L2, where L is the number of digits in the number to be factored; error correction algorithms would inflate this figure by an additional factor of L. For a 1000-bit number, this implies a need for about 104 bits without error correction. With error correction, the figure would rise to about 107 bits. Computation time is about L2 or about 107 steps and at 1MHz, about 10 seconds. However, other careful estimates lower the qubit count to 3million for factorizing 2,048-bit integer in 5 months on a trapped-ion quantum computer.
+Another approach to the stability-decoherence problem is to create a topological quantum computer with anyons, quasi-particles used as threads, and relying on braid theory to form stable logic gates.
+ Quantum supremacy 
+Quantum supremacy is a term coined by John Preskill referring to the engineering feat of demonstrating that a programmable quantum device can solve a problem beyond the capabilities of state-of-the-art classical computers. The problem need not be useful, so some view the quantum supremacy test only as a potential future benchmark.
+In October 2019, Google AI Quantum, with the help of NASA, became the first to claim to have achieved quantum supremacy by performing calculations on the Sycamore quantum computer more than 3,000,000 times faster than they could be done on Summit, generally considered the world's fastest computer. This claim has been subsequently challenged: IBM has stated that Summit can perform samples much faster than claimed, and researchers have since developed better algorithms for the sampling problem used to claim quantum supremacy, giving substantial reductions to the gap between Sycamore and classical supercomputers and even beating it.
+In December 2020, a group at USTC implemented a type of Boson sampling on 76 photons with a photonic quantum computer, Jiuzhang, to demonstrate quantum supremacy. The authors claim that a classical contemporary supercomputer would require a computational time of 600 million years to generate the number of samples their quantum processor can generate in 20 seconds.
+On November 16, 2021, at the quantum computing summit, IBM presented a 127-qubit microprocessor named IBM Eagle.
+ Skepticism 
+Some researchers have expressed skepticism that scalable quantum computers could ever be built, typically because of the issue of maintaining coherence at large scales, but also for other reasons.
+Bill Unruh doubted the practicality of quantum computers in a paper published in 1994. Paul Davies argued that a 400-qubit computer would even come into conflict with the cosmological information bound implied by the holographic principle. Skeptics like Gil Kalai doubt that quantum supremacy will ever be achieved. Physicist Mikhail Dyakonov has expressed skepticism of quantum computing as follows:
+"So the number of continuous parameters describing the state of such a useful quantum computer at any given moment must be... about 10300... Could we ever learn to control the more than 10300 continuously variable parameters defining the quantum state of such a system? My answer is simple. No, never."
+ Candidates for physical realizations 
+For physically implementing a quantum computer, many different candidates are being pursued, among them (distinguished by the physical system used to realize the qubits):
+Superconducting quantum computing (qubit implemented by the state of nonlinear resonant superconducting circuits containing Josephson junctions)
+Trapped ion quantum computer (qubit implemented by the internal state of trapped ions)
+Neutral atoms in optical lattices (qubit implemented by internal states of neutral atoms trapped in an optical lattice)
+Quantum dot computer, spin-based (e.g. the Loss-DiVincenzo quantum computer) (qubit given by the spin states of trapped electrons)
+Quantum dot computer, spatial-based (qubit given by electron position in double quantum dot)
+ Quantum computing using engineered quantum wells, which could in principle enable the construction of a quantum computer that operates at room temperature
+Coupled quantum wire (qubit implemented by a pair of quantum wires coupled by a quantum point contact)
+Nuclear magnetic resonance quantum computer (NMRQC) implemented with the nuclear magnetic resonance of molecules in solution, where qubits are provided by nuclear spins within the dissolved molecule and probed with radio waves
+Solid-state NMR Kane quantum computer (qubit realized by the nuclear spin state of phosphorus donors in silicon)
+Vibrational quantum computer (qubits realized by vibrational superpositions in cold molecules)
+Electrons-on-helium quantum computer (qubit is the electron spin)
+Cavity quantum electrodynamics (CQED) (qubit provided by the internal state of trapped atoms coupled to high-finesse cavities)
+Molecular magnet (qubit given by spin states)
+Fullerene-based ESR quantum computer (qubit based on the electronic spin of atoms or molecules encased in fullerenes)
+Nonlinear optical quantum computer (qubits realized by processing states of different modes of light through both linear and nonlinear elements)
+Linear optical quantum computer (LOQC) (qubits realized by processing states of different modes of light through linear elements e.g. mirrors, beam splitters and phase shifters). Quantum microprocessor based on laser photonics at room temperature made possible.
+Diamond-based quantum computer (qubit realized by the electronic or nuclear spin of nitrogen-vacancy centers in diamond)
+Bose-Einstein condensate-based quantum computer
+Transistor-based quantum computer (string quantum computers with entrainment of positive holes using an electrostatic trap)
+Rare-earth-metal-ion-doped inorganic crystal based quantum computer (qubit realized by the internal electronic state of dopants in optical fibers)
+Metallic-like carbon nanospheres-based quantum computer
+The large number of candidates demonstrates that quantum computing, despite rapid progress, is still in its infancy.
+ Theory  
+ Computability  
+Any computational problem solvable by a classical computer is also solvable by a quantum computer. Intuitively, this is because it is believed that all physical phenomena, including the operation of classical computers, can be described using quantum mechanics, which underlies the operation of quantum computers.
+Conversely, any problem solvable by a quantum computer is also solvable by a classical computer. It is possible to simulate both quantum and classical computers manually with just some paper and a pen, if given enough time. More formally, any quantum computer can be simulated by a Turing machine. In other words, quantum computers provide no additional power over classical computers in terms of computability. This means that quantum computers cannot solve undecidable problems like the halting problem, and the existence of quantum computers does not disprove the Church–Turing thesis.
+ Complexity  
+While quantum computers cannot solve any problems that classical computers cannot already solve, it is suspected that they can solve certain problems faster than classical computers. For instance, it is known that quantum computers can efficiently factor integers, while this is not believed to be the case for classical computers.
+The class of problems that can be efficiently solved by a quantum computer with bounded error is called BQP, for "bounded error, quantum, polynomial time". More formally, BQP is the class of problems that can be solved by a polynomial-time quantum Turing machine with an error probability of at most 1/3. As a class of probabilistic problems, BQP is the quantum counterpart to BPP ("bounded error, probabilistic, polynomial time"), the class of problems that can be solved by polynomial-time probabilistic Turing machines with bounded error. It is known that  and is widely suspected that , which intuitively would mean that quantum computers are more powerful than classical computers in terms of time complexity.
+thumb|The suspected relationship of BQP to several classical complexity classes
+The exact relationship of BQP to P, NP, and PSPACE is not known. However, it is known that ; that is, all problems that can be efficiently solved by a deterministic classical computer can also be efficiently solved by a quantum computer, and all problems that can be efficiently solved by a quantum computer can also be solved by a deterministic classical computer with polynomial space resources. It is further suspected that BQP is a strict superset of P, meaning there are problems that are efficiently solvable by quantum computers that are not efficiently solvable by deterministic classical computers. For instance, integer factorization and the discrete logarithm problem are known to be in BQP and are suspected to be outside of P. On the relationship of BQP to NP, little is known beyond the fact that some NP problems that are believed not to be in P are also in BQP (integer factorization and the discrete logarithm problem are both in NP, for example). It is suspected that ; that is, it is believed that there are efficiently checkable problems that are not efficiently solvable by a quantum computer. As a direct consequence of this belief, it is also suspected that BQP is disjoint from the class of NP-complete problems (if an NP-complete problem were in BQP, then it would follow from NP-hardness that all problems in NP are in BQP).
+The relationship of BQP to the basic classical complexity classes can be summarized as follows:
+It is also known that BQP is contained in the complexity class  (or more precisely in the associated class of decision problems ), which is a subclass of PSPACE.
+It has been speculated that further advances in physics could lead to even faster computers. For instance, it has been shown that a non-local hidden variable quantum computer based on Bohmian Mechanics could implement a search of an -item database in at most  steps, a slight speedup over Grover's algorithm, which runs in  steps. Note, however, that neither search method would allow quantum computers to solve NP-complete problems in polynomial time. Theories of quantum gravity, such as M-theory and loop quantum gravity, may allow even faster computers to be built. However, defining computation in these theories is an open problem due to the problem of time; that is, within these physical theories there is currently no obvious way to describe what it means for an observer to submit input to a computer at one point in time and then receive output at a later point in time. See section 7 "Quantum Gravity": "[...] to anyone who wants a test or benchmark for a favorite quantum gravity theory,[author's footnote: That is, one without all the bother of making numerical predictions and comparing them to observation] let me humbly propose the following: can you define Quantum Gravity Polynomial-Time? [...] until we can say what it means for a 'user' to specify an 'input' and 'later' receive an 'output'—there is no such thing as computation, not even theoretically." (emphasis in original)
+ See also 
+D-Wave Systems
+Electronic quantum holography
+Glossary of quantum computing
+IARPA
+List of emerging technologies
+List of quantum processors
+Magic state distillation
+Natural computing
+Optical computing
+Quantum bus
+Quantum cognition
+Quantum volume
+Quantum weirdness
+Rigetti Computing
+Supercomputer
+Theoretical computer science
+Unconventional computing
+Valleytronics
+ Notes 
+ References 
+ Further reading 
+Textbooks
+Academic papers
+ Table 1 lists switching and dephasing times for various systems.
+ External links 
+ Stanford Encyclopedia of Philosophy: "Quantum Computing" by Amit Hagar and Michael E. Cuffaro.
+ Quantum computing for the very curious by Andy Matuschak and Michael Nielsen
+Lectures
+ Quantum computing for the determined – 22 video lectures by Michael Nielsen
+ Video Lectures by David Deutsch
+ Lectures at the Institut Henri Poincaré (slides and videos)
+ Online lecture on An Introduction to Quantum Computing, Edward Gerjuoy (2008)
+ Lomonaco, Sam. Four Lectures on Quantum Computing given at Oxford University in July 2006
+Category:Quantum computing
+Category:Models of computation
+Category:Quantum cryptography
+Category:Information theory
+Category:Computational complexity theory
+Category:Classes of computers
+Category:Theoretical computer science
+Category:Open problems
+Category:Computer-related introductions in 1980
+Category:Emerging technologies
+Category:Supercomputers
+"""
+
+From "Epic of Gilgamesh" ==> """
+The Epic of Gilgamesh ()"Gilgamesh" . Random House Webster's Unabridged Dictionary. is an epic poem from ancient Mesopotamia. The literary history of Gilgamesh begins with five Sumerian poems about Bilgamesh (Sumerian for "Gilgamesh"), king of Uruk, dating from the Third Dynasty of Ur (). These independent stories were later used as source material for a combined epic in Akkadian. The first surviving version of this combined epic, known as the "Old Babylonian" version, dates back to the 18th century BC and is titled after its incipit, Shūtur eli sharrī ("Surpassing All Other Kings"). Only a few tablets of it have survived. The later Standard Babylonian version compiled by Sîn-lēqi-unninni dates from the 13th to the 10th centuries BC and bears the incipit Sha naqba īmuru ("He who Saw the Abyss", ). Approximately two-thirds of this longer, twelve-tablet version have been recovered. Some of the best copies were discovered in the library ruins of the 7th-century BC Assyrian king Ashurbanipal.
+The first half of the story discusses Gilgamesh, king of Uruk, and Enkidu, a wild man created by the gods to stop Gilgamesh from oppressing the people of Uruk. After Enkidu becomes civilized through sexual initiation with Shamhat, he travels to Uruk, where he challenges Gilgamesh to a test of strength. Gilgamesh wins the contest; nonetheless, the two become friends. Together, they make a six-day journey to the legendary Cedar Forest, where they plan to slay the Guardian, Humbaba the Terrible, and cut down the sacred Cedar. The goddess Ishtar sends the Bull of Heaven to punish Gilgamesh for spurning her advances. Gilgamesh and Enkidu kill the Bull of Heaven after which the gods decide to sentence Enkidu to death and kill him.
+In the second half of the epic, distress over Enkidu's death causes Gilgamesh to undertake a long and perilous journey to discover the secret of eternal life. He eventually learns that "Life, which you look for, you will never find. For when the gods created man, they let death be his share, and life withheld in their own hands". Nevertheless, because of his great building projects, his account of Siduri's advice, and what the immortal man Utnapishtim told him about the Great Flood, Gilgamesh's fame survived well after his death, with expanding interest in his story. It has been translated into many languages and is featured in several works of popular fiction.
+The epic is regarded as a foundational work in religion and the tradition of heroic sagas, with Gilgamesh forming the prototype for later heroes like Heracles (Hercules), and the epic itself serving as an influence for Homeric epics.
+ History 
+left|170px|thumb|Ancient Assyrian statue currently in the Louvre, possibly representing Gilgamesh
+Distinct sources exist from over a 2000-year timeframe. The earliest Sumerian poems are now generally considered to be distinct stories, rather than parts of a single epic. They date from as early as the Third Dynasty of Ur (). The Old Babylonian tablets () are the earliest surviving tablets for a single Epic of Gilgamesh narrative. The older Old Babylonian tablets and later Akkadian version are important sources for modern translations, with the earlier texts mainly used to fill in gaps (lacunae) in the later texts. Although several revised versions based on new discoveries have been published, the epic remains incomplete. Analysis of the Old Babylonian text has been used to reconstruct possible earlier forms of the epic. The most recent Akkadian version, also referred to as the Standard Babylonian version, consists of twelve tablets and was edited by Sîn-lēqi-unninni, who is thought to have lived sometime between 1300 BC and 1000 BC.
+thumb|Enkidu, Gilgamesh's friend. From Ur, Iraq, 2027–1763 BC. Iraq Museum
+About 15,000 fragments of Assyrian cuneiform tablets were discovered in the Library of Ashurbanipal in Nineveh by Austen Henry Layard, his assistant Hormuzd Rassam, and W. K. Loftus in the early 1850s. Late in the following decade, the British Museum hired George Smith to study these; in 1872, Smith read translated fragments before the Society of Biblical Archaeology, and in 1875 and 1876 he published fuller translations, the latter of which was published as The Chaldaean Account of Genesis. The central character of Gilgamesh was initially reintroduced to the world as "Izdubar", before the cuneiform logographs in his name could be pronounced accurately.  In 1891, Paul Haupt collected the cuneiform text, and nine years later, Peter Jensen provided a comprehensive edition; R. Campbell Thompson updated both of their work in 1930. Over the next two decades, Samuel Noah Kramer reassembled the Sumerian poems.
+In 1998, American Assyriologist Theodore Kwasman discovered a piece believed to have contained the first lines of the epic in the storeroom of the British Museum; the fragment, found in 1878 and dated to between 600 BC and 100 BC, had remained unexamined by experts for more than a century since its recovery. The fragment read "He who saw all, who was the foundation of the land, who knew (everything), was wise in all matters: Gilgamesh."  The discovery of artifacts () associated with Enmebaragesi of Kish, mentioned in the legends as the father of one of Gilgamesh's adversaries, has lent credibility to the historical existence of Gilgamesh.
+In the early 2000s, the Gilgamesh Dream Tablet was imported illegally into the United States. According to the United States Department of Justice, the tablet was encrusted with dirt and unreadable when it was purchased by a US antiquities dealer in 2003. The tablet was sold by an unnamed antiques dealer in 2007 with a letter falsely stating that it had been inside a box of ancient bronze fragments purchased in a 1981 auction. In 2014, Hobby Lobby privately purchased the tablet for display at the Museum of the Bible in Washington, D.C. In 2019, the Gilgamesh Dream Tablet was seized by US officials and was returned to Iraq in September 2021.
+ Versions 
+thumb|The Gilgamesh Dream tablet. From Iraq. Middle Babylonian Period, First Sealand Dynasty, 1732-1460 BCE. Iraq Museum, Baghdad. This dream tablet recounts a part of the epic of Gilgamesh in which the hero (Gilgamesh) describes his dreams to his mother (the goddess Ninsun), who interprets them as announcing the arrival of a new friend, who will become his companion
+From the diverse sources found, two main versions of the epic have been partially reconstructed: the Standard Babylonian version, or He who saw the deep, and the Old Babylonian version, or Surpassing all other kings. Five earlier Sumerian poems about Gilgamesh have been partially recovered, some with primitive versions of specific episodes in the Babylonian version, others with unrelated stories.
+ Standard Babylonian version 
+The Standard Babylonian version was discovered by Hormuzd Rassam in the library of Ashurbanipal in Nineveh in 1853. "Standard Babylonian" refers to a literary style that was used for literary purposes. This version was compiled by Sin-liqe-unninni sometime between 1300 and 1000 BC from earlier texts. One impact that Sin-liqe-unninni brought to the work was to bring the issue of mortality to the foreground, thus making it possible for the character to move from being an "adventurer to a wise man." According to Lins Brandão, the standard version can be seen in this sense as sapiential literature, common in the Middle East.
+The Standard Babylonian version has different opening words, or incipit, from the older version. The older version begins with the words "Surpassing all other kings", while the Standard Babylonian version has "He who saw the deep" (ša naqba īmuru), "deep" referring to the mysteries of the information brought back by Gilgamesh from his meeting with Uta-Napishti (Utnapishtim) about Ea, the fountain of wisdom. Gilgamesh was given knowledge of how to worship the gods, why death was ordained for human beings, what makes a good king, and how to live a good life. The story of Utnapishtim, the hero of the flood myth, can also be found in the Babylonian epic of Atra-Hasis. The Standard version is also known as iškar Gilgāmeš, "Series of Gilgamesh".
+The 12th tablet is a sequel to the original 11, and was probably appended at a later date. It bears little relation to the well-crafted 11-tablet epic; the lines at the beginning of the first tablet are quoted at the end of the 11th tablet, giving it circularity and finality. Tablet 12 is a near copy of an earlier Sumerian tale, a prequel, in which Gilgamesh sends Enkidu to retrieve some objects of his from the Underworld, and he returns in the form of a spirit to relate the nature of the Underworld to Gilgamesh.
+In terms of form, the poetic conventions followed in the Standard Babylonian version appear to be inconsistent and are still controversial among scholars. There is, however, extensive use of parallelism across sets of two or three adjacent lines, much like in the Hebrew Psalms.
+ Genre 
+When it was discovered in the 19th century, the story of Gilgamesh was classified as a Greek epic, a genre known in Europe, even though it predates the Greek culture that spawned epics, specifically, when Herodotus referred to the works of Homer in this way. When Alfred Jeremias translated the text, he insisted on the relationship to Genesis by giving the title "Izdubar-Nimrod" and by recognizing the genre as that of Greek heroic poetry. Although the equalization to Nimrod was dropped, the view of "Greek epic" was retained. Martin Litchfield West, in 1966, in the preface to his edition of Hesiod, recognized the proximity of the Greeks to the middle eastern center of convergence, "greek literature is a Near East literature." One difference between the Greek epic poems and Gilgamesh would be the fact that the Greek heroes acted in the context of war, while Gilgamesh acted in isolation (with the exception of Enkidu's brief existence) - and could equal Heracles.
+Considering how the text would be viewed from the standpoint of its time is tricky, as George Smith acknowledges that there is no "Sumerian or Akkadian word for myth or heroic narrative, just as there is no ancient recognition of poetic narrative as a genre."  recognizes that the prologue of "He who Saw the Abyss" recalls the inspiration of the Greek Muses, even though there is no god's assistance here. It is also made explicit that Gilgamesh rose to the rank of an "ancient wise man" (antedeluvian). Lins Brandão continues, noting how the poem would have been "put on a stele" ("narû"), that at first "narû" could be seen as the genre of the poem, taking into consideration that the reader (or scribe) would have to pass the text on, without omitting or adding anything. The prologue also implies that Gilgamesh narrated his story to a copyist, thus being a kind of "autobiography in third person".
+ Content of the Standard Babylonian version tablets 
+This summary is based on Andrew George's translation.
+ Tablet one 
+The story introduces Gilgamesh, king of Uruk. Gilgamesh, two-thirds god and one-third man, is oppressing his people, who cry out to the gods for help. For the young women of Uruk this oppression takes the form of a droit du seigneur, or "lord's right", to sleep with brides on their wedding night. For the young men (the tablet is damaged at this point) it is conjectured that Gilgamesh exhausts them through games, tests of strength, or perhaps forced labour on building projects. The gods respond to the people's pleas by creating an equal to Gilgamesh who will be able to stop his oppression. This is the primitive man, Enkidu, who is covered in hair and lives in the wild with the animals. He is spotted by a trapper, whose livelihood is being ruined because Enkidu is uprooting his traps. The trapper tells the sun-god Shamash about the man, and it is arranged for Enkidu to be seduced by Shamhat, a temple prostitute, his first step towards being tamed. After six days and seven nights (or two weeks, according to more recent scholarship) of lovemaking and teaching Enkidu about the ways of civilization, she takes Enkidu to a shepherd's camp to learn how to be civilized. Gilgamesh, meanwhile, has been having dreams about the imminent arrival of a beloved new companion and asks his mother, Ninsun, to help interpret these dreams.
+ Tablet two 
+thumb|Fragment of Tablet II of the Epic of Gilgamesh, Sulaymaniyah Museum, Iraq
+Shamhat brings Enkidu to the shepherds' camp, where he is introduced to a human diet and becomes the night watchman. Learning from a passing stranger about Gilgamesh's treatment of new brides, Enkidu is incensed and travels to Uruk to intervene at a wedding. When Gilgamesh attempts to visit the wedding chamber, Enkidu blocks his way, and they fight. After a fierce battle, Enkidu acknowledges Gilgamesh's superior strength and they become friends. Gilgamesh proposes a journey to the Cedar Forest to slay the monstrous demi-god Humbaba in order to gain fame and renown. Despite warnings from Enkidu and the council of elders, Gilgamesh is not deterred.
+ Tablet three 
+The elders give Gilgamesh advice for his journey. Gilgamesh visits his mother, the goddess Ninsun, who seeks the support and protection of the sun-god Shamash for their adventure. Ninsun adopts Enkidu as her son, and Gilgamesh leaves instructions for the governance of Uruk in his absence.
+ Tablet four 
+thumb|The second dream of Gilgamesh on the journey to the Forest of Cedar. Epic of Gilgamesh tablet from Hattusa, Turkey. 13th century BC. Neues Museum, Germany
+Gilgamesh and Enkidu journey to the Cedar Forest. Every few days they camp on a mountain, and perform a dream ritual. Gilgamesh has five terrifying dreams about falling mountains, thunderstorms, wild bulls, and a thunderbird that breathes fire. Despite similarities between his dream figures and earlier descriptions of Humbaba, Enkidu interprets these dreams as good omens, and denies that the frightening images represent the forest guardian. As they approach the cedar mountain, they hear Humbaba bellowing, and have to encourage each other not to be afraid.
+ Tablet five 
+thumb|Tablet V of the Epic of Gilgamesh
+thumb|Reverse side of the newly discovered tablet V of the Epic of Gilgamesh. It dates back to the old Babylonian period, 2003–1595 BC, and is currently housed in the Sulaymaniyah Museum, Iraq
+The heroes enter the cedar forest. Humbaba, the guardian of the Cedar Forest, insults and threatens them. He accuses Enkidu of betrayal, and vows to disembowel Gilgamesh and feed his flesh to the birds. Gilgamesh is afraid, but with some encouraging words from Enkidu the battle commences. The mountains quake with the tumult and the sky turns black. The god Shamash sends 13 winds to bind Humbaba, and he is captured. Humbaba pleads for his life, and Gilgamesh pities him. He offers to make Gilgamesh king of the forest, to cut the trees for him, and to be his slave. Enkidu, however, argues that Gilgamesh should kill Humbaba to establish his reputation forever. Humbaba curses them both and Gilgamesh dispatches him with a blow to the neck, as well as killing his seven sons. The two heroes cut down many cedars, including a gigantic tree that Enkidu plans to fashion into a gate for the temple of Enlil. They build a raft and return home along the Euphrates with the giant tree and (possibly) the head of Humbaba.
+ Tablet six 
+Gilgamesh rejects the advances of the goddess Ishtar because of her mistreatment of previous lovers like Dumuzi. Ishtar asks her father Anu to send the Bull of Heaven to avenge her. When Anu rejects her complaints, Ishtar threatens to raise the dead who will "outnumber the living" and "devour them". Anu states that if he gives her the Bull of Heaven, Uruk will face 7 years of famine. Ishtar provides him with provisions for 7 years in exchange for the bull. Ishtar leads the Bull of Heaven to Uruk, and it causes widespread devastation. It lowers the level of the Euphrates river, and dries up the marshes. It opens up huge pits that swallow 300 men. Without any divine assistance, Enkidu and Gilgamesh attack and slay it, and offer up its heart to Shamash. When Ishtar cries out, Enkidu hurls one of the hindquarters of the bull at her. The city of Uruk celebrates, but Enkidu has an ominous dream about his future failure.
+ Tablet seven 
+In Enkidu's dream, the gods decide that one of the heroes must die because they killed Humbaba and Gugalanna. Despite the protestations of Shamash, Enkidu is marked for death. Enkidu curses the great door he has fashioned for Enlil's temple. He also curses the trapper and Shamhat for removing him from the wild. Shamash reminds Enkidu of how Shamhat fed and clothed him, and introduced him to Gilgamesh. Shamash tells him that Gilgamesh will bestow great honors upon him at his funeral, and will wander into the wild consumed with grief. Enkidu regrets his curses and blesses Shamhat instead. In a second dream, however, he sees himself being taken captive to the Netherworld by a terrifying Angel of Death. The underworld is a "house of dust" and darkness whose inhabitants eat clay, and are clothed in bird feathers, supervised by terrifying beings. For 12 days, Enkidu's condition worsens. Finally, after a lament that he could not meet a heroic death in battle, he dies. In a famous line from the epic, Gilgamesh clings to Enkidu's body and denies that he has died until a maggot drops from the corpse's nose.
+ Tablet eight 
+Gilgamesh delivers a lament for Enkidu, in which he calls upon mountains, forests, fields, rivers, wild animals, and all of Uruk to mourn for his friend. Recalling their adventures together, Gilgamesh tears at his hair and clothes in grief. He commissions a funerary statue, and provides grave gifts from his treasury to ensure that Enkidu has a favourable reception in the realm of the dead. A great banquet is held where the treasures are offered to the gods of the Netherworld. Just before a break in the text there is a suggestion that a river is being dammed, indicating a burial in a river bed, as in the corresponding Sumerian poem, The Death of Gilgamesh.
+ Tablet nine 
+Tablet nine opens with Gilgamesh roaming the wild wearing animal skins, grieving for Enkidu. Having now become fearful of his own death, he decides to seek Utnapishtim ("the Faraway"), and learn the secret of eternal life. Among the few survivors of the Great Flood, Utnapishtim and his wife are the only humans to have been granted immortality by the gods. Gilgamesh crosses a mountain pass at night and encounters a pride of lions. Before sleeping he prays for protection to the moon god Sin. Then, waking from an encouraging dream, he kills the lions and uses their skins for clothing. After a long and perilous journey, Gilgamesh arrives at the twin peaks of Mount Mashu at the end of the earth. He comes across a tunnel, which no man has ever entered, guarded by two scorpion monsters, who appear to be a married couple. The husband tries to dissuade Gilgamesh from passing, but the wife intervenes, expresses sympathy for Gilgamesh, and (according to the poem's editor Benjamin Foster) allows his passage. He passes under the mountains along the Road of the Sun. In complete darkness he follows the road for 12 "double hours", managing to complete the trip before the Sun catches up with him. He arrives at the Garden of the gods, a paradise full of jewel-laden trees.
+ Tablet ten 
+Gilgamesh meets alewife Siduri, who assumes that he is a murderer or thief because of his disheveled appearance. Gilgamesh tells her about the purpose of his journey. She attempts to dissuade him from his quest, but sends him to Urshanabi the ferryman, who will help him cross the sea to Utnapishtim. Gilgamesh, out of spontaneous rage, destroys the stone charms that Urshanabi keeps with him. He tells him his story, but when he asks for his help, Urshanabi informs him that he has just destroyed the objects that can help them cross the Waters of Death, which are deadly to the touch. Urshanabi instructs Gilgamesh to cut down 120 trees and fashion them into punting poles. When they reach the island where Utnapishtim lives, Gilgamesh recounts his story, asking him for his help. Utnapishtim reprimands him, declaring that fighting the common fate of humans is futile and diminishes life's joys.
+ Tablet eleven 
+thumb|Tablet XI (or the Flood Tablet) of the Epic of Gilgamesh. British Museum
+thumb|upright=0.8|George Smith transliterated and read the "Babylonian Flood Story" of Tablet XI
+Gilgamesh observes that Utnapishtim seems no different from himself, and asks him how he obtained his immortality. Utnapishtim explains that the gods decided to send a great flood. To save Utnapishtim the god Enki told him to build a boat. He gave him precise dimensions, and it was sealed with pitch and bitumen. His entire family went aboard together with his craftsmen and "all the animals of the field". A violent storm then arose which caused the terrified gods to retreat to the heavens. Ishtar lamented the wholesale destruction of humanity, and the other gods wept beside her. The storm lasted six days and nights, after which "all the human beings turned to clay". Utnapishtim weeps when he sees the destruction. His boat lodges on a mountain, and he releases a dove, a swallow, and a raven. When the raven fails to return, he opens the ark and frees its inhabitants. Utnapishtim offers a sacrifice to the gods, who smell the sweet savor and gather around. Ishtar vows that just as she will never forget the brilliant necklace that hangs around her neck, she will always remember this time. When Enlil arrives, angry that there are survivors, she condemns him for instigating the flood. Enki also castigates him for sending a disproportionate punishment. Enlil blesses Utnapishtim and his wife, and rewards them with eternal life. This account largely matches the flood story that concludes the Epic of .
+The main point seems to be that when Enlil granted eternal life it was a unique gift. As if to demonstrate this point, Utnapishtim challenges Gilgamesh to stay awake for six days and seven nights. Gilgamesh falls asleep, and Utnapishtim instructs his wife to bake a loaf of bread on each of the days he is asleep, so that he cannot deny his failure to keep awake. Gilgamesh, who is seeking to overcome death, cannot even conquer sleep. After instructing Urshanabi, the ferryman, to wash Gilgamesh and clothe him in royal robes, they depart for Uruk.
+As they are leaving, Utnapishtim's wife asks her husband to offer a parting gift. Utnapishtim tells Gilgamesh that at the bottom of the sea there lives a boxthorn-like plant that will make him young again. Gilgamesh, by binding stones to his feet so he can walk on the bottom, manages to obtain the plant. Gilgamesh proposes to investigate if the plant has the hypothesized rejuvenation ability by testing it on an old man once he returns to Uruk.
+When Gilgamesh stops to bathe, it is stolen by a serpent, who sheds its skin as it departs. Gilgamesh weeps at the futility of his efforts, because he has now lost all chance of immortality. He returns to Uruk, where the sight of its massive walls prompts him to praise this enduring work to Urshanabi.
+ Tablet twelve 
+This tablet is mainly an Akkadian translation of an earlier Sumerian poem, "Gilgamesh and the Netherworld" (also known as "Gilgamesh, Enkidu, and the Netherworld" and variants), although it has been suggested that it is derived from an unknown version of that story. The contents of this last tablet are inconsistent with previous ones: Enkidu is still alive, despite having died earlier in the epic. Because of this, its lack of integration with the other tablets, and the fact that it is almost a copy of an earlier version, it has been referred to as an 'inorganic appendage' to the epic. Alternatively, it has been suggested that "its purpose, though crudely handled, is to explain to Gilgamesh (and the reader) the various fates of the dead in the Afterlife" and in "an awkward attempt to bring closure", it both connects the Gilgamesh of the epic with the Gilgamesh who is the King of the Netherworld, and is "a dramatic capstone whereby the twelve-tablet epic ends on one and the same theme, that of "seeing" (= understanding, discovery, etc.), with which it began."
+Gilgamesh complains to Enkidu that various of his possessions (the tablet is unclear exactly what different translations include a drum and a ball) have fallen into the underworld. Enkidu offers to bring them back. Delighted, Gilgamesh tells Enkidu what he must and must not do in the underworld if he is to return. Enkidu does everything which he was told not to do. The underworld keeps him. Gilgamesh prays to the gods to give him back his friend. Enlil and Suen don't reply, but Enki and Shamash decide to help. Shamash makes a crack in the earth, and Enkidu's ghost jumps out of it. The tablet ends with Gilgamesh questioning Enkidu about what he has seen in the underworld.
+ Old Babylonian versions 
+This version of the epic, called in some fragments Surpassing all other kings, is composed of tablets and fragments from diverse origins and states of conservation. It remains incomplete in its majority, with several tablets missing, and those found having sizable lacunae. They are named after their current location or the place where they were found.
+ Pennsylvania tablet 
+Surpassing all other kings Tablet II, greatly correlates with tablets I–II of the Standard Babylonian version.
+Gilgamesh tells his mother Ninsun about two dreams he had. His mother explains that they mean that a new companion will soon arrive at Uruk. In the meanwhile the wild Enkidu and the priestess (here called Shamkatum) have sex. She tames him in company of the shepherds by offering him bread and beer. Enkidu helps the shepherds by guarding the sheep. They travel to Uruk to confront Gilgamesh and stop his abuses. Enkidu and Gilgamesh battle but Gilgamesh breaks off the fight. Enkidu praises Gilgamesh.
+ Yale tablet 
+Surpassing all other kings Tablet III, partially matches tablets II–III of the Standard Babylonian version.
+For reasons unknown (the tablet is partially broken) Enkidu is in a sad mood. In order to cheer him up Gilgamesh suggests going to the Pine Forest to cut down trees and kill Humbaba (known here as Huwawa). Enkidu protests, as he knows Huwawa and is aware of his power. Gilgamesh talks Enkidu into it with some words of encouragement, but Enkidu remains reluctant. They prepare, and call for the elders. The elders also protest, but after Gilgamesh talks to them, they agree to let him go. After Gilgamesh asks his god (Shamash) for protection, and both he and Enkidu equip themselves, they leave with the elders' blessing and counsel.
+ Philadelphia fragment 
+Possibly another version of the contents of the Yale Tablet, practically irrecoverable.
+ Nippur school tablet 
+In the journey to the cedar forest and Huwawa, Enkidu interprets one of Gilgamesh's dreams.
+ Tell Harmal tablets 
+Fragments from two different versions/tablets tell how Enkidu interprets one of Gilgamesh's dreams on the way to the Forest of Cedar, and their conversation when entering the forest.
+ Ishchali tablet 
+After defeating Huwawa, Gilgamesh refrains from slaying him, and urges Enkidu to hunt Huwawa's "seven auras". Enkidu convinces him to smite their enemy. After killing Huwawa and the auras, they chop down part of the forest and discover the gods' secret abode. The rest of the tablet is broken.
+The auras are not referred to in the Standard Babylonian version, but are in one of the Sumerian poems as "sons".
+ Partial fragment in Baghdad 
+Partially overlapping the felling of the trees from the Ishchali tablet.
+ Sippar tablet 
+Partially overlapping the Standard Babylonian version tablets IX–X.
+Gilgamesh mourns the death of Enkidu wandering in his quest for immortality. Gilgamesh argues with Shamash about the futility of his quest. After a lacuna, Gilgamesh talks to Siduri about his quest and his journey to meet Utnapishtim (here called Uta-na'ishtim). Siduri attempts to dissuade Gilgamesh in his quest for immortality, urging him to be content with the simple pleasures of life. After one more lacuna, Gilgamesh smashes the "stone ones" and talks to the ferryman Urshanabi (here called Sur-sunabu). After a short discussion, Sur-sunabu asks him to carve 300 oars so that they may cross the waters of death without needing the "stone ones". The rest of the tablet is missing.
+The text on the Old Babylonian Meissner fragment (the larger surviving fragment of the Sippar tablet) has been used to reconstruct possible earlier forms of the Epic of Gilgamesh, and it has been suggested that a "prior form of the story – earlier even than that preserved on the Old Babylonian fragment – may well have ended with Siduri sending Gilgamesh back to Uruk..." and "Utnapistim was not originally part of the tale."Abusch, T. Gilgamesh's Request and Siduri's Denial. Part I: The Meaning of the Dialogue and Its Implications for the History of the Epic. |11.05 MB The Tablet and the Scroll; Near Eastern Studies in Honor of William W. Hallo, 1–14. Retrieved 9 September 2013.
+ Sumerian poems 
+There are five extant Gilgamesh stories in the form of older poems in Sumerian. These probably circulated independently, rather than being in the form of a unified epic. Some of the names of the main characters in these poems differ slightly from later Akkadian names; for example, "Bilgamesh" is written instead of "Gilgamesh", and there are some differences in the underlying stories such as the fact that Enkidu is Gilgamesh's servant in the Sumerian version:
+ The lord to the Living One's Mountain and Ho, hurrah! correspond to the Cedar Forest episode (Standard Babylonian version tablets II–V). Gilgamesh and Enkidu travel with other men to the Forest of Cedar. There, trapped by Huwawa, Gilgamesh tricks him (with Enkidu's assistance in one of the versions) into giving up his auras, thus losing his power.
+ Hero in battle corresponds to the Bull of Heaven episode (Standard Babylonian version tablet VI) in the Akkadian version. The Bull's voracious appetite causes drought and hardship in the land while Gilgamesh feasts. Lugalbanda convinces him to face the beast and fights it alongside Enkidu.
+ The envoys of Akka has no corresponding episode in the epic, but the themes of whether to show mercy to captives, and counsel from the city elders, also occur in the Standard Babylonian version of the Humbaba story. In the poem, Uruk faces a siege from a Kish army led by King Akka, whom Gilgamesh defeats and forgives.
+ In those days, in those far-off days, otherwise known as Gilgamesh, Enkidu, and the Netherworld, is the source for the Akkadian translation included as tablet XII in the Standard Babylonian version, telling of Enkidu's journey to the Netherworld. It is also the main source of information for the Sumerian creation myth and the story of "Inanna and the Huluppu Tree".
+ The great wild bull is lying down, a poem about Gilgamesh's death, burial and consecration as a semigod, reigning and giving judgement over the dead. After dreaming of how the gods decide his fate after death, Gilgamesh takes counsel, prepares his funeral and offers gifts to the gods. Once deceased, he is buried under the Euphrates, taken off its course and later returned to it.
+Translations
+The first direct Arabic translation from the original tablets was published in the 1960s by Iraqi archaeologist Taha Baqir.
+The definitive modern translation is a two-volume critical work by Andrew George, published by Oxford University Press in 2003. A book review by Cambridge scholar Eleanor Robson claims that George's is the most significant critical work on Gilgamesh in the last 70 years. George discusses the state of the surviving material, and provides a tablet-by-tablet exegesis, with a dual language side-by-side translation.
+In 2004, Stephen Mitchell supplied a controversial version that takes many liberties with the text and includes modernized allusions and commentary relating to the Iraq War of 2003.
+In 2021, a translation by Sophus Helle was published by Yale University Press.
+Later influence
+ Relationship to the Bible 
+Various themes, plot elements, and characters in the Hebrew Bible correlate with the Epic of Gilgameshnotably, the accounts of the Garden of Eden, the advice from Ecclesiastes, and the Genesis flood narrative.
+ Garden of Eden 
+The parallels between the stories of Enkidu/Shamhat and Adam/Eve have been long recognized by scholars. In both, a man is created from the soil by a god, and lives in a natural setting amongst the animals. He is introduced to a woman who tempts him. In both stories the man accepts food from the woman, covers his nakedness, and must leave his former realm, unable to return. The presence of a snake that steals a plant of immortality from the hero later in the epic is another point of similarity. However, a major difference between the two stories is that while Enkidu experiences regret regarding his seduction away from nature, this is only temporary: After being confronted by the god Shamash for being ungrateful, Enkidu recants and decides to give the woman who seduced him his final blessing before he dies. This is in contrast to Adam, whose fall from grace is largely portrayed as a punishment for disobeying God and the inevitable consequence of the loss of innocence regarding good and evil.
+ Advice from Ecclesiastes 
+Several scholars suggest direct borrowing of Siduri's advice by the author of Ecclesiastes.
+A rare proverb about the strength of a triple-stranded rope, "a triple-stranded rope is not easily broken", is common to both books. 
+ Noah's flood 
+Andrew George submits that the Genesis flood narrative matches that in Gilgamesh so closely that "few doubt" that it derives from a Mesopotamian account. What is particularly noticeable is the way the Genesis flood story follows the Gilgamesh flood tale "point by point and in the same order", even when the story permits other alternatives.Rendsburg, Gary (2007). "The Biblical flood story in the light of the Gilgamesh flood account," in Gilgamesh and the world of Assyria, eds Azize, J & Weeks, N. Peters,  p. 117. In a 2001 Torah commentary released on behalf of the Conservative Movement of Judaism, rabbinic scholar Robert Wexler stated: "The most likely assumption we can make is that both Genesis and Gilgamesh drew their material from a common tradition about the flood that existed in Mesopotamia. These stories then diverged in the retelling." Ziusudra, Utnapishtim and Noah are the respective heroes of the Sumerian, Akkadian and biblical flood legends of the ancient Near East.
+ Additional biblical parallels 
+Matthias Henze suggests that Nebuchadnezzar's madness in the biblical Book of Daniel draws on the Epic of Gilgamesh. He claims that the author uses elements from the description of Enkidu to paint a sarcastic and mocking portrait of the king of Babylon.
+Many characters in the Epic have mythical biblical parallels, most notably Ninti, the Sumerian goddess of life, was created from Enki's rib to heal him after he had eaten forbidden flowers. It is suggested that this story served as the basis for the story of Eve created from Adam's rib in the Book of Genesis.
+Esther J. Hamori, in Echoes of Gilgamesh in the Jacob Story, also claims that the myth of Jacob and Esau is paralleled with the wrestling match between Gilgamesh and Enkidu.
+ Book of Giants 
+Gilgamesh is mentioned in one version of The Book of Giants which is related to the Book of Enoch. The Book of Giants version found at Qumran mentions the Sumerian hero Gilgamesh and the monster Humbaba with the Watchers and giants.
+ Influence on Homer 
+Numerous scholars have drawn attention to various themes, episodes, and verses, indicating that the Epic of Gilgamesh had a substantial influence on both of the epic poems ascribed to Homer. These influences are detailed by Martin Litchfield West in The East Face of Helicon: West Asiatic Elements in Greek Poetry and Myth. According to Tzvi Abusch of Brandeis University, the poem "combines the power and tragedy of the Iliad with the wanderings and marvels of the Odyssey. It is a work of adventure, but is no less a meditation on some fundamental issues of human existence." Martin West, in "The East face of Helicon," speculates that the memory of Gilgamesh would have reached the Greeks through a lost poem about Heracles.
+ In popular culture 
+The Epic of Gilgamesh has inspired many works of literature, art, and music. It was only after World War I that the Gilgamesh epic reached a modern audience, and only after World War II that it was featured in a variety of genres.
+ See also 
+ List of artifacts in biblical archaeology
+ List of characters in Epic of Gilgamesh
+ Babylonian literature
+ Cattle in religion
+ Sumerian creation myth
+ Sumerian literature
+ Notes 
+ References 
+ Sources 
+ Further reading 
+ Translations
+ : (Volume 1) in the original Akkadian cuneiform and transliteration; commentary and glossary are in English
+ : re-print of the Penguin Classic translation (in prose) by N. K. Sandars 1960 () without the introduction.
+  – an adaptation for young adults, translated directly to Hebrew from the original Akkadian language by Shin Shifra
+ Versions
+  First published in 1970 by Houghton Mifflin; Mentor Books paperback published 1972.
+ Analysis
+ (Portuguese Wikisource. Internet Archive)
+ (Internet Archive)
+ Articles
+ Macfarlane, Robert, "A Fireball from the Sands" (review of Gilgamesh: A New Translation of the Ancient Epic, translated from the Akkadian and with essays by Sophus Helle, Yale University Press, 2022, 286 pp.), The New York Review of Books, vol. LXIX, no. 16 (20 October 2022), pp. 65–67.
+ External links 
+I.4 Poem of Gilgameš critical edition and translation of the text (electronic Babylonian Library).
+ Translations of the legends of Gilgamesh in the Sumerian language can be found in Black, J.A., Cunningham, G., Fluckiger-Hawker, E, Robson, E., and Zólyomi, G., The Electronic Text Corpus of Sumerian Literature, Oxford 1998–
+ Gilgamesh and Huwawa, version A
+ Gilgamesh and Huwawa, version B
+ Gilgamesh and the Bull of Heaven
+ Gilgamesh and Aga
+ Gilgamesh, Enkidu and the nether world
+ The death of Gilgamesh
+ , edited by Morris Jastrow, translated by Albert T. Clay
+The Epic of Gilgamesh, Complete Academic Translation by R. Campbell Thompson
+The Epic of Gilgamesh by Kovacs, M.G.
+Category:21st-century BC books
+Category:Fiction set in the 3rd millennium BC
+Category:1853 archaeological discoveries
+Gilgamesh
+Category:Flood myths
+Category:Fiction about immortality
+Category:Lost poems
+Category:Poems adapted into films
+Category:Prostitution in literature
+Category:Sumer in fiction
+Category:Sumerian literature
+Category:Akkadian literature
+Category:Works about monarchs
+Category:Gilgamesh
+"""
+
+From "Python (programming language)" ==> """
+Python is a high-level, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation via the off-side rule.
+Python is dynamically typed and garbage-collected. It supports multiple programming paradigms, including structured (particularly procedural), object-oriented and functional programming. It is often described as a "batteries included" language due to its comprehensive standard library.
+Guido van Rossum began working on Python in the late 1980s as a successor to the ABC programming language and first released it in 1991 as Python 0.9.0. Python 2.0 was released in 2000. Python 3.0, released in 2008, was a major revision not completely backward-compatible with earlier versions. Python 2.7.18, released in 2020, was the last release of Python 2.
+Python consistently ranks as one of the most popular programming languages. Updated as required.
+History
+thumb|150px|The designer of Python, Guido van Rossum, at OSCON 2006
+Python was conceived in the late 1980s by Guido van Rossum at Centrum Wiskunde & Informatica (CWI) in the Netherlands as a successor to the ABC programming language, which was inspired by SETL, capable of exception handling and interfacing with the Amoeba operating system. Its implementation began in December 1989. Van Rossum shouldered sole responsibility for the project, as the lead developer, until 12 July 2018, when he announced his "permanent vacation" from his responsibilities as Python's "benevolent dictator for life", a title the Python community bestowed upon him to reflect his long-term commitment as the project's chief decision-maker. In January 2019, active Python core developers elected a five-member Steering Council to lead the project.
+Python 2.0 was released on 16 October 2000, with many major new features such as list comprehensions, cycle-detecting garbage collection, reference counting, and Unicode support. Python 3.0, released on 3 December 2008, with many of its major features backported to Python 2.6.x and 2.7.x. Releases of Python 3 include the 2to3 utility, which automates the translation of Python 2 code to Python 3.
+Python 2.7's end-of-life was initially set for 2015, then postponed to 2020 out of concern that a large body of existing code could not easily be forward-ported to Python 3. No further security patches or other improvements will be released for it. Currently only 3.7 and later are supported. In 2021, Python 3.9.2 and 3.8.8 were expedited as all versions of Python (including 2.7) had security issues leading to possible remote code execution and web cache poisoning.
+In 2022, Python 3.10.4 and 3.9.12 were expedited and 3.8.13, and 3.7.13, because of many security issues. When Python 3.9.13 was released in May 2022, it was announced that the 3.9 series (joining the older series 3.8 and 3.7) would only receive security fixes in the future. On September 7, 2022, four new releases were made due to a potential denial-of-service attack: 3.10.7, 3.9.14, 3.8.14, and 3.7.14.
+ Python 3.11 is the stable release. Notable changes from 3.10 include increased program execution speed and improved error reporting.
+Design philosophy and features
+Python is a multi-paradigm programming language. Object-oriented programming and structured programming are fully supported, and many of their features support functional programming and aspect-oriented programming (including metaprogramming and metaobjects). Many other paradigms are supported via extensions, including design by contract and logic programming.
+Python uses dynamic typing and a combination of reference counting and a cycle-detecting garbage collector for memory management. It uses dynamic name resolution (late binding), which binds method and variable names during program execution.
+Its design offers some support for functional programming in the Lisp tradition. It has  functions; list comprehensions, dictionaries, sets, and generator expressions. The standard library has two modules ( and ) that implement functional tools borrowed from Haskell and Standard ML.
+Its core philosophy is summarized in the document The Zen of Python (PEP 20), which includes aphorisms such as:
+ Beautiful is better than ugly.
+ Explicit is better than implicit.
+ Simple is better than complex.
+ Complex is better than complicated.
+ Readability counts.
+Rather than building all of its functionality into its core, Python was designed to be highly extensible via modules. This compact modularity has made it particularly popular as a means of adding programmable interfaces to existing applications. Van Rossum's vision of a small core language with a large standard library and easily extensible interpreter stemmed from his frustrations with ABC, which espoused the opposite approach.
+Python strives for a simpler, less-cluttered syntax and grammar while giving developers a choice in their coding methodology. In contrast to Perl's "there is more than one way to do it" motto, Python embraces a "there should be one—and preferably only one—obvious way to do it"  philosophy. Alex Martelli, a Fellow at the Python Software Foundation and Python book author, wrote: "To describe something as 'clever' is not considered a compliment in the Python culture."
+Python's developers strive to avoid premature optimization and reject patches to non-critical parts of the CPython reference implementation that would offer marginal increases in speed at the cost of clarity. When speed is important, a Python programmer can move time-critical functions to extension modules written in languages such as C; or use PyPy, a just-in-time compiler. Cython is also available, which translates a Python script into C and makes direct C-level API calls into the Python interpreter.
+Python's developers aim for it to be fun to use. This is reflected in its name—a tribute to the British comedy group Monty Python—and in occasionally playful approaches to tutorials and reference materials, such as the use of the terms "spam" and "eggs" (a reference to a Monty Python sketch) in examples, instead of the often-used "foo" and "bar".
+A common neologism in the Python community is pythonic, which has a wide range of meanings related to program style. "Pythonic" code may use Python idioms well, be natural or show fluency in the language, or conform with Python's minimalist philosophy and emphasis on readability. Code that is difficult to understand or reads like a rough transcription from another programming language is called unpythonic.
+Syntax and semantics
+Python is meant to be an easily readable language. Its formatting is visually uncluttered and often uses English keywords where other languages use punctuation. Unlike many other languages, it does not use curly brackets to delimit blocks, and semicolons after statements are allowed but rarely used. It has fewer syntactic exceptions and special cases than C or Pascal.
+Indentation
+Python uses whitespace indentation, rather than curly brackets or keywords, to delimit blocks. An increase in indentation comes after certain statements; a decrease in indentation signifies the end of the current block. Thus, the program's visual structure accurately represents its semantic structure. This feature is sometimes termed the off-side rule. Some other languages use indentation this way; but in most, indentation has no semantic meaning. The recommended indent size is four spaces.
+Statements and control flow
+Python's statements include:
+ The assignment statement, using a single equals sign =
+ The if statement, which conditionally executes a block of code, along with else and elif (a contraction of else-if)
+ The for statement, which iterates over an iterable object, capturing each element to a local variable for use by the attached block
+ The while statement, which executes a block of code as long as its condition is true
+ The try statement, which allows exceptions raised in its attached code block to be caught and handled by except clauses (or new syntax except* in Python 3.11 for exception groups); it also ensures that clean-up code in a finally block is always run regardless of how the block exits
+ The raise statement, used to raise a specified exception or re-raise a caught exception
+ The class statement, which executes a block of code and attaches its local namespace to a class, for use in object-oriented programming
+ The def statement, which defines a function or method
+ The with statement, which encloses a code block within a context manager (for example, acquiring a lock before it is run, then releasing the lock; or opening and closing a file), allowing resource-acquisition-is-initialization (RAII)-like behavior and replacing a common try/finally idiom
+ The break statement, which exits a loop
+ The continue statement, which skips the rest of the current iteration and continues with the next
+ The del statement, which removes a variable—deleting the reference from the name to the value, and producing an error if the variable is referred to before it is redefined
+ The pass statement, serving as a NOP, syntactically needed to create an empty code block
+ The assert statement, used in debugging to check for conditions that should apply
+ The yield statement, which returns a value from a generator function (and also an operator); used to implement coroutines
+ The return statement, used to return a value from a function
+ The import and from statements, used to import modules whose functions or variables can be used in the current program
+The assignment statement (=) binds a name as a reference to a separate, dynamically allocated object. Variables may subsequently be rebound at any time to any object. In Python, a variable name is a generic reference holder without a fixed data type; however, it always refers to some object with a type. This is called dynamic typing—in contrast to statically-typed languages, where each variable may contain only a value of a certain type.
+Python does not support tail call optimization or first-class continuations, and, according to Van Rossum, it never will. However, better support for coroutine-like functionality is provided by extending Python's generators. Before 2.5, generators were lazy iterators; data was passed unidirectionally out of the generator. From Python 2.5 on, it is possible to pass data back into a generator function; and from version 3.3, it can be passed through multiple stack levels.
+Expressions
+Python's expressions include:
+ The +, -, and * operators for mathematical addition, subtraction, and multiplication are similar to other languages, but the behavior of division differs. There are two types of divisions in Python: floor division (or integer division) // and floating-point/division. Python uses the ** operator for exponentiation.
+ Python uses the + operator for string concatenation. Python uses the * operator for duplicating a string a specified number of times.
+ The @ infix operator. It is intended to be used by libraries such as NumPy for matrix multiplication.
+ The syntax :=, called the "walrus operator", was introduced in Python 3.8. It assigns values to variables as part of a larger expression.
+ In Python, == compares by value. Python's is operator may be used to compare object identities (comparison by reference), and comparisons may be chained—for example, .
+ Python uses and, or, and not as boolean operators.
+ Python has a type of expression called a list comprehension, as well as a more general expression called a generator expression.
+ Anonymous functions are implemented using lambda expressions; however, there may be only one expression in each body.
+ Conditional expressions are written as  (different in order of operands from the c ? x : y operator common to many other languages).
+ Python makes a distinction between lists and tuples. Lists are written as , are mutable, and cannot be used as the keys of dictionaries (dictionary keys must be immutable in Python). Tuples, written as , are immutable and thus can be used as keys of dictionaries, provided all of the tuple's elements are immutable. The + operator can be used to concatenate two tuples, which does not directly modify their contents, but produces a new tuple containing the elements of both. Thus, given the variable t initially equal to , executing  first evaluates , which yields , which is then assigned back to t—thereby effectively "modifying the contents" of t while conforming to the immutable nature of tuple objects. Parentheses are optional for tuples in unambiguous contexts.
+ Python features sequence unpacking where multiple expressions, each evaluating to anything that can be assigned (to a variable, writable property, etc.) are associated in an identical manner to that forming tuple literals—and, as a whole, are put on the left-hand side of the equal sign in an assignment statement. The statement expects an iterable object on the right-hand side of the equal sign that produces the same number of values as the provided writable expressions; when iterated through them, it assigns each of the produced values to the corresponding expression on the left.
+ Python has a "string format" operator % that functions analogously to printf format strings in C—e.g.  evaluates to "spam=blah eggs=2". In Python 2.6+ and 3+, this was supplemented by the format() method of the str class, e.g. . Python 3.6 added "f-strings": .
+ Strings in Python can be concatenated by "adding" them (with the same operator as for adding integers and floats), e.g.  returns "spameggs". If strings contain numbers, they are added as strings rather than integers, e.g.  returns "22".
+ Python has various string literals:
+ Delimited by single or double quote marks; unlike in Unix shells, Perl, and Perl-influenced languages, single and double quote marks work the same. Both use the backslash (\) as an escape character. String interpolation became available in Python 3.6 as "formatted string literals".
+ Triple-quoted (beginning and ending with three single or double quote marks), which may span multiple lines and function like here documents in shells, Perl, and Ruby.
+ Raw string varieties, denoted by prefixing the string literal with r. Escape sequences are not interpreted; hence raw strings are useful where literal backslashes are common, such as regular expressions and Windows-style paths. (Compare "@-quoting" in C#.)
+ Python has array index and array slicing expressions in lists, denoted as a[key],  or . Indexes are zero-based, and negative indexes are relative to the end. Slices take elements from the start index up to, but not including, the stop index. The third slice parameter called step or stride, allows elements to be skipped and reversed. Slice indexes may be omitted—for example,  returns a copy of the entire list. Each element of a slice is a shallow copy.
+In Python, a distinction between expressions and statements is rigidly enforced, in contrast to languages such as Common Lisp, Scheme, or Ruby. This leads to duplicating some functionality. For example:
+ List comprehensions vs. for-loops
+ Conditional expressions vs. if blocks
+ The eval() vs. exec() built-in functions (in Python 2, exec is a statement); the former is for expressions, the latter is for statements
+Statements cannot be a part of an expression—so list and other comprehensions or lambda expressions, all being expressions, cannot contain statements. A particular case is that an assignment statement such as  cannot form part of the conditional expression of a conditional statement. This has the advantage of avoiding a classic C error of mistaking an assignment operator = for an equality operator == in conditions: } is syntactically valid (but probably unintended) C code, but  causes a syntax error in Python.
+Methods
+Methods on objects are functions attached to the object's class; the syntax  is, for normal methods and functions, syntactic sugar for . Python methods have an explicit self parameter to access instance data, in contrast to the implicit self (or this) in some other object-oriented programming languages (e.g., C++, Java, Objective-C, Ruby). Python also provides methods, often called dunder methods (due to their names beginning and ending with double-underscores), to allow user-defined classes to modify how they are handled by native operations including length, comparison, in arithmetic operations and type conversion.
+Typing
+thumb|The standard type hierarchy in Python 3
+Python uses duck typing and has typed objects but untyped variable names. Type constraints are not checked at compile time; rather, operations on an object may fail, signifying that it is not of a suitable type. Despite being dynamically typed, Python is strongly typed, forbidding operations that are not well-defined (for example, adding a number to a string) rather than silently attempting to make sense of them.
+Python allows programmers to define their own types using classes, most often used for object-oriented programming. New instances of classes are constructed by calling the class (for example,  or ), and the classes are instances of the metaclass type (itself an instance of itself), allowing metaprogramming and reflection.
+Before version 3.0, Python had two kinds of classes (both using the same syntax): old-style and new-style, current Python versions only support the semantics new style.
+Python supports gradual typing. Python's syntax allows specifying static types, but they are not checked in the default implementation, CPython. An experimental optional static type-checker, mypy, supports compile-time type checking.
++ Summary of Python 3's built-in types Type Mutability Description Syntax examples bool immutable Boolean value  bytearray mutable Sequence of bytes  bytes immutable Sequence of bytes  complex immutable Complex number with real and imaginary parts  dict mutable Associative array (or dictionary) of key and value pairs; can contain mixed types (keys and values), keys must be a hashable type }} types.EllipsisType immutable An ellipsis placeholder to be used as an index in NumPy arrays  float immutable Double-precision floating-point number. The precision is machine-dependent but in practice is generally implemented as a 64-bit IEEE 754 number with 53 bits of precision. frozenset immutable Unordered set, contains no duplicates; can contain mixed types, if hashable  int immutable Integer of unlimited magnitude  list mutable List, can contain mixed types  types.NoneType immutable An object representing the absence of a value, often called null in other languages  types.NotImplementedType immutable A placeholder that can be returned from overloaded operators to indicate unsupported operand types.  range immutable An immutable sequence of numbers commonly used for looping a specific number of times in for loops  set mutable Unordered set, contains no duplicates; can contain mixed types, if hashable } str immutable A character string: sequence of Unicode codepoints """Spanning
+multiple
+lines"""Spanning
+multiple
+lines tuple immutable Can contain mixed types 
+Arithmetic operations
+Python has the usual symbols for arithmetic operators (+, -, *, /), the floor division operator // and the modulo operation % (where the remainder can be negative,  e.g. 4 % -3 == -2). It also has ** for exponentiation, e.g. 5**3 == 125 and 9**0.5 == 3.0, and a matrix‑multiplication operator @ . These operators work like in traditional math; with the same precedence rules, the operators infix (+ and - can also be unary to represent positive and negative numbers respectively).
+The division between integers produces floating-point results. The behavior of division has changed significantly over time:
+ Current Python (i.e. since 3.0) changed / to always be floating-point division, e.g. .
+ The floor division // operator was introduced. So 7//3 == 2, -7//3 == -3, 7.5//3 == 2.0 and -7.5//3 == -3.0. Adding  causes a module used in Python 2.7 to use Python 3.0 rules for division (see above).
+In Python terms, / is true division (or simply division), and // is floor division. / before version 3.0 is classic division.
+Rounding towards negative infinity, though different from most languages, adds consistency. For instance, it means that the equation  is always true. It also means that the equation  is valid for both positive and negative values of a. However, maintaining the validity of this equation means that while the result of a%b is, as expected, in the half-open interval [0, b), where b is a positive integer, it has to lie in the interval (b, 0] when b is negative.
+Python provides a round function for rounding a float to the nearest integer. For tie-breaking, Python 3 uses round to even: round(1.5) and round(2.5) both produce 2. Versions before 3 used round-away-from-zero: round(0.5) is 1.0, round(-0.5) is −1.0.
+Python allows boolean expressions with multiple equality relations in a manner that is consistent with general use in mathematics. For example, the expression a < b < c tests whether a is less than b and b is less than c. C-derived languages interpret this expression differently: in C, the expression would first evaluate a < b, resulting in 0 or 1, and that result would then be compared with c.
+Python uses arbitrary-precision arithmetic for all integer operations. The Decimal type/class in the decimal module provides decimal floating-point numbers to a pre-defined arbitrary precision and several rounding modes. The Fraction class in the fractions module provides arbitrary precision for rational numbers.
+Due to Python's extensive mathematics library, and the third-party library NumPy that further extends the native capabilities, it is frequently used as a scientific scripting language to aid in problems such as numerical data processing and manipulation.
+Programming examples
+Hello world program:
+print('Hello, world!')
+Program to calculate the factorial of a positive integer:
+n = int(input('Type a number, and its factorial will be printed: '))
+if n < 0:
+    raise ValueError('You must enter a non-negative integer')
+factorial = 1
+for i in range(2, n + 1):
+    factorial *= i
+print(factorial)
+Libraries
+Python's large standard library provides tools suited to many tasks and is commonly cited as one of its greatest strengths. For Internet-facing applications, many standard formats and protocols such as MIME and HTTP are supported. It includes modules for creating graphical user interfaces, connecting to relational databases, generating pseudorandom numbers, arithmetic with arbitrary-precision decimals, manipulating regular expressions, and unit testing.
+Some parts of the standard library are covered by specifications—for example, the Web Server Gateway Interface (WSGI) implementation wsgiref follows PEP 333—but most are specified by their code, internal documentation, and test suites. However, because most of the standard library is cross-platform Python code, only a few modules need altering or rewriting for variant implementations.
+ the Python Package Index (PyPI), the official repository for third-party Python software, contains over 415,000 packages with a wide range of functionality, including:
+Development environments
+Most Python implementations (including CPython) include a read–eval–print loop (REPL), permitting them to function as a command line interpreter for which users enter statements sequentially and receive results immediately.
+Python also comes with an Integrated development environment (IDE) called IDLE, which is more beginner-oriented.
+Other shells, including IDLE and IPython, add further abilities such as improved auto-completion, session state retention, and syntax highlighting.
+As well as standard desktop integrated development environments, there are Web browser-based IDEs, including SageMath, for developing science- and math-related programs; PythonAnywhere, a browser-based IDE and hosting environment; and Canopy IDE, a commercial IDE emphasizing scientific computing.
+Implementations
+Reference implementation
+CPython is the reference implementation of Python. It is written in C, meeting the C89 standard (Python 3.11 uses C11) with several select C99 features. CPython includes its own C extensions, but third-party extensions are not limited to older C versions—e.g. they can be implemented with C11 or C++.) It compiles Python programs into an intermediate bytecode which is then executed by its virtual machine. CPython is distributed with a large standard library written in a mixture of C and native Python, and is available for many platforms, including Windows (starting with Python 3.9, the Python installer deliberately fails to install on Windows 7 and 8; Windows XP was supported until Python 3.5) and most modern Unix-like systems, including macOS (and Apple M1 Macs, since Python 3.9.1, with experimental installer) and unofficial support for e.g. VMS. Platform portability was one of its earliest priorities. (During Python 1 and 2 development, even OS/2 and Solaris were supported, but support has since been dropped for many platforms.)
+Other implementations
+ PyPy is a fast, compliant interpreter of Python 2.7 and 3.8. Its just-in-time compiler often brings a significant speed improvement over CPython but some libraries written in C cannot be used with it.
+ Stackless Python is a significant fork of CPython that implements microthreads; it does not use the call stack in the same way, thus allowing massively concurrent programs. PyPy also has a stackless version.
+ MicroPython and CircuitPython are Python 3 variants optimized for microcontrollers, including Lego Mindstorms EV3.
+ Pyston is a variant of the Python runtime that uses just-in-time compilation to speed up the execution of Python programs.
+ Cinder is a performance-oriented fork of CPython 3.8 that contains a number of optimizations including bytecode inline caching, eager evaluation of coroutines, a method-at-a-time JIT, and an experimental bytecode compiler.
+Unsupported implementations
+Other just-in-time Python compilers have been developed, but are now unsupported:
+ Google began a project named Unladen Swallow in 2009, with the aim of speeding up the Python interpreter fivefold by using the LLVM, and of improving its multithreading ability to scale to thousands of cores, while ordinary implementations suffer from the global interpreter lock.
+ Psyco is a discontinued just-in-time specializing compiler that integrates with CPython and transforms bytecode to machine code at runtime. The emitted code is specialized for certain data types and is faster than the standard Python code. Psyco does not support Python 2.7 or later.
+ PyS60 was a Python 2 interpreter for Series 60 mobile phones released by Nokia in 2005. It implemented many of the modules from the standard library and some additional modules for integrating with the Symbian operating system. The Nokia N900 also supports Python with GTK widget libraries, enabling programs to be written and run on the target device.
+Cross-compilers to other languages
+There are several compilers to high-level object languages, with either unrestricted Python, a restricted subset of Python, or a language similar to Python as the source language:
+ Brython, Transcrypt and Pyjs (latest release in 2012) compile Python to JavaScript.
+ Cython compiles (a superset of) Python  to C (while the resulting code is also usable with Python and also e.g. C++).
+ Nuitka compiles Python into C.
+ Numba uses LLVM to compile a subset of Python to machine code.
+ Pythran compiles a subset of Python 3 to C++ (C++11).
+ RPython can be compiled to C, and is used to build the PyPy interpreter of Python.
+ The Python → 11l → C++ transpilerThe Python → 11l → C++ transpiler compiles a subset of Python 3 to C++ (C++17).
+Specialized:
+ MyHDL is a Python-based hardware description language (HDL), that converts MyHDL code to Verilog or VHDL code.
+Older projects (or not to be used with Python 3.x and latest syntax):
+ Google's Grumpy (latest release in 2017) transpiles Python 2 to Go.
+ IronPython  allows running Python 2.7 programs (and an alpha, released in 2021, is also available for "Python 3.4, although features and behaviors from later versions may be included") on the .NET Common Language Runtime.
+ Jython compiles Python 2.7 to Java bytecode, allowing the use of the Java libraries from a Python program.
+ Pyrex (latest release in 2010) and Shed Skin (latest release in 2013) compile to C and C++ respectively.
+Performance
+Performance comparison of various Python implementations on a non-numerical (combinatorial) workload was presented at EuroSciPy '13. Python's performance compared to other programming languages is also benchmarked by The Computer Language Benchmarks Game.
+Development
+Python's development is conducted largely through the Python Enhancement Proposal (PEP) process, the primary mechanism for proposing major new features, collecting community input on issues, and documenting Python design decisions. Python coding style is covered in PEP 8. Outstanding PEPs are reviewed and commented on by the Python community and the steering council.
+Enhancement of the language corresponds with the development of the CPython reference implementation. The mailing list python-dev is the primary forum for the language's development. Specific issues were originally discussed in the Roundup bug tracker hosted at by the foundation. In 2022, all issues and discussions were migrated to GitHub. Development originally took place on a self-hosted source-code repository running Mercurial, until Python moved to GitHub in January 2017.
+CPython's public releases come in three types, distinguished by which part of the version number is incremented:
+ Backward-incompatible versions, where code is expected to break and needs to be manually ported. The first part of the version number is incremented. These releases happen infrequently—version 3.0 was released 8 years after 2.0. According to Guido van Rossum, a version 4.0 is very unlikely to ever happen.
+ Major or "feature" releases are largely compatible with the previous version but introduce new features. The second part of the version number is incremented. Starting with Python 3.9, these releases are expected to happen annually. Each major version is supported by bug fixes for several years after its release.
+ Bugfix releases, which introduce no new features, occur about every 3 months and are made when a sufficient number of bugs have been fixed upstream since the last release. Security vulnerabilities are also patched in these releases. The third and final part of the version number is incremented.
+Many alpha, beta, and release-candidates are also released as previews and for testing before final releases. Although there is a rough schedule for each release, they are often delayed if the code is not ready. Python's development team monitors the state of the code by running the large unit test suite during development.
+The major academic conference on Python is PyCon. There are also special Python mentoring programs, such as Pyladies.
+Python 3.10 deprecated wstr (to be removed in Python 3.12; meaning Python extensions need to be modified by then), and added pattern matching to the language.
+API documentation generators
+Tools that can generate documentation for Python API include pydoc (available as part of the standard library), Sphinx, Pdoc and its forks, Doxygen and Graphviz, among others.
+Naming
+Python's name is derived from the British comedy group Monty Python, whom Python creator Guido van Rossum enjoyed while developing the language. Monty Python references appear frequently in Python code and culture; for example, the metasyntactic variables often used in Python literature are spam and eggs instead of the traditional foo and bar. The official Python documentation also contains various references to Monty Python routines.
+The prefix Py- is used to show that something is related to Python. Examples of the use of this prefix in names of Python applications or libraries include Pygame, a binding of SDL to Python (commonly used to create games); PyQt and PyGTK, which bind Qt and GTK to Python respectively; and PyPy, a Python implementation originally written in Python.
+Popularity
+Since 2003, Python has consistently ranked in the top ten most popular programming languages in the TIOBE Programming Community Index where  it was the most popular language (ahead of C, C++, and Java). It was selected Programming Language of the Year (for "the highest rise in ratings in a year") in 2007, 2010, 2018, and 2020 (the only language to have done so four times as of 2020).
+An empirical study found that scripting languages, such as Python, are more productive than conventional languages, such as C and Java, for programming problems involving string manipulation and search in a dictionary, and determined that memory consumption was often "better than Java and not much worse than C or C++".
+Large organizations that use Python include Wikipedia, Google, Yahoo!, CERN, NASA, Facebook, Amazon, Instagram, Spotify, and some smaller entities like ILM and ITA. The social news networking site Reddit was written mostly in Python.
+Uses
+thumb|Python Powered
+Python can serve as a scripting language for web applications, e.g., via  for the Apache webserver. With Web Server Gateway Interface, a standard API has evolved to facilitate these applications. Web frameworks like Django, Pylons, Pyramid, TurboGears, web2py, Tornado, Flask, Bottle, and Zope support developers in the design and maintenance of complex applications. Pyjs and IronPython can be used to develop the client-side of Ajax-based applications. SQLAlchemy can be used as a data mapper to a relational database. Twisted is a framework to program communications between computers, and is used (for example) by Dropbox.
+Libraries such as NumPy, SciPy, and Matplotlib allow the effective use of Python in scientific computing, with specialized libraries such as Biopython and Astropy providing domain-specific functionality. SageMath is a computer algebra system with a notebook interface programmable in Python: its library covers many aspects of mathematics, including algebra, combinatorics, numerical mathematics, number theory, and calculus. OpenCV has Python bindings with a rich set of features for computer vision and image processing.
+Python is commonly used in artificial intelligence projects and machine learning projects with the help of libraries like TensorFlow, Keras, Pytorch, and scikit-learn. As a scripting language with a modular architecture, simple syntax, and rich text processing tools, Python is often used for natural language processing.
+Python can also be used to create games, with libraries such as Pygame, which can make 2D games.
+Python has been successfully embedded in many software products as a scripting language, including in finite element method software such as Abaqus, 3D parametric modelers like FreeCAD, 3D animation packages such as 3ds Max, Blender, Cinema 4D, Lightwave, Houdini, Maya, modo, MotionBuilder, Softimage, the visual effects compositor Nuke, 2D imaging programs like GIMP, Inkscape, Scribus and Paint Shop Pro, and musical notation programs like scorewriter and capella. GNU Debugger uses Python as a pretty printer to show complex structures such as C++ containers. Esri promotes Python as the best choice for writing scripts in ArcGIS. It has also been used in several video games, and has been adopted as first of the three available programming languages in Google App Engine, the other two being Java and Go.
+Many operating systems include Python as a standard component. It ships with most Linux distributions, AmigaOS 4 (using Python 2.7), FreeBSD (as a package), NetBSD, and OpenBSD (as a package) and can be used from the command line (terminal). Many Linux distributions use installers written in Python: Ubuntu uses the Ubiquity installer, while Red Hat Linux and Fedora Linux use the Anaconda installer. Gentoo Linux uses Python in its package management system, Portage.
+Python is used extensively in the information security industry, including in exploit development.
+Most of the Sugar software for the One Laptop per Child XO, developed at Sugar Labs since 2008, is written in Python. The Raspberry Pi single-board computer project has adopted Python as its main user-programming language.
+LibreOffice includes Python and intends to replace Java with Python. Its Python Scripting Provider is a core feature since Version 4.0 from 7 February 2013.
+Languages influenced by Python
+Python's design and philosophy have influenced many other programming languages:
+ Boo uses indentation, a similar syntax, and a similar object model.
+ Cobra uses indentation and a similar syntax, and its Acknowledgements document lists Python first among languages that influenced it.
+ CoffeeScript, a programming language that cross-compiles to JavaScript, has Python-inspired syntax.
+ ECMAScript/JavaScript borrowed iterators and generators from Python.
+ GDScript, a scripting language very similar to Python, built-in to the Godot game engine.
+ Go is designed for the "speed of working in a dynamic language like Python" and shares the same syntax for slicing arrays.
+ Groovy was motivated by the desire to bring the Python design philosophy to Java.
+ Julia was designed to be "as usable for general programming as Python".
+ Mojo is currently a non-strict (aims to be a strict) superset of Python (e.g. still missing classes, and adding e.g. struct), and is up to 35,000x faster for some code (mandelbrot, since its embarrassingly parallel), where static typing helps (and MLIR it's implemented with), and e.g. 4000x faster for matrix multiply. It's not yet open-sourced, but that's the plan.
+ Nim uses indentation and similar syntax.
+ Ruby's creator, Yukihiro Matsumoto, has said: "I wanted a scripting language that was more powerful than Perl, and more object-oriented than Python. That's why I decided to design my own language."
+ Swift, a programming language developed by Apple, has some Python-inspired syntax.
+Python's development practices have also been emulated by other languages. For example, the practice of requiring a document describing the rationale for, and issues surrounding, a change to the language (in Python, a PEP) is also used in Tcl, Erlang, and Swift.
+See also
+ Python syntax and semantics
+ pip (package manager)
+ List of programming languages
+ History of programming languages
+ Comparison of programming languages
+References
+Sources
+Further reading
+ Ramalho, Luciano (May 2022). Fluent Python (2nd ed.). O'Reilly Media. .
+External links
+Category:Articles with example Python (programming language) code
+Category:Class-based programming languages
+Category:Notebook interface
+Category:Computer science in the Netherlands
+Category:Concurrent programming languages
+Category:Cross-platform free software
+Category:Cross-platform software
+Category:Dutch inventions
+Category:Dynamically typed programming languages
+Category:Educational programming languages
+Category:High-level programming languages
+Category:Information technology in the Netherlands
+Category:Multi-paradigm programming languages
+Category:Object-oriented programming languages
+Category:Pattern matching programming languages
+Category:Programming languages
+Category:Programming languages created in 1991
+Category:Scripting languages
+Category:Text-oriented programming languages
+"""
+
+From "Guido van Rossum" ==> """
+thumb|Van Rossum at the 2008 Google I/O Developer's Conference
+thumb|Van Rossum at the 2006 O'Reilly Open Source Convention (OSCON)
+Guido van Rossum (; born 31 January 1956) is a Dutch programmer best known as the creator of the Python programming language, for which he was the "benevolent dictator for life" (BDFL) until he stepped down from the position on 12 July 2018. He remained a member of the Python Steering Council through 2019, and withdrew from nominations for the 2020 election.
+Life and education
+Van Rossum was born and raised in the Netherlands, where he received a master's degree in mathematics and computer science from the University of Amsterdam in 1982. He received a bronze medal in 1974 in the International Mathematical Olympiad. He has a brother, Just van Rossum, who is a type designer and programmer who designed the typeface used in the "Python Powered" logo.
+Van Rossum lives in Belmont, California, with his wife, Kim Knapp, and their son. According to his home page and Dutch naming conventions, the "van" in his name is capitalized when he is referred to by surname alone, but not when using his first and last name together.
+Work
+Centrum Wiskunde & Informatica
+While working at the Centrum Wiskunde & Informatica (CWI), Van Rossum wrote and contributed a glob() routine to BSD Unix in 1986 and helped develop the ABC programming language. He once stated, "I try to mention ABC's influence because I'm indebted to everything I learned during that project and to the people who worked on it." He also created Grail, an early web browser written in Python, and engaged in discussions about the HTML standard.
+He has worked for various research institutes, including the Centrum Wiskunde & Informatica (CWI) in the Netherlands, the U.S. National Institute of Standards and Technology (NIST), and the Corporation for National Research Initiatives (CNRI). In May 2000, he left CNRI along with three other Python core developers to work for tech startup BeOpen.com, which subsequently collapsed by October of the same year. From late 2000 until 2003 he worked for Zope Corporation. In 2003 Van Rossum left Zope for Elemental Security. While there he worked on a custom programming language for the organization. 
+Google
+From 2005 to December 2012, he worked at Google, where he spent half of his time developing the Python language. 
+At Google, Van Rossum developed Mondrian, a web-based code review system written in Python and used within the company. He named the software after the Dutch painter Piet Mondrian. He named another related software project after Gerrit Rietveld, a Dutch designer. On 7 December 2012, Van Rossum left Google.
+Dropbox
+In January 2013, Van Rossum started working at the cloud file storage company Dropbox.
+In October 2019, Van Rossum left Dropbox and officially retired.
+Microsoft
+On 12 November 2020 Van Rossum announced that he was coming out of retirement to join the Developer Division at Microsoft. He currently holds the title Distinguished Engineer at Microsoft.https://www.linkedin.com/in/guido-van-rossum-4a0756/ 
+Python
+In December 1989, Van Rossum had been looking for a hobby' programming project that would keep [him] occupied during the week around Christmas" as his office was closed when he decided to write an interpreter for a "new scripting language [he] had been thinking about lately: a descendant of ABC that would appeal to Unix/C hackers". He attributes choosing the name "Python" to "being in a slightly irreverent mood (and a big fan of Monty Python's Flying Circus)".
+He has explained that Python's predecessor, ABC, was inspired by SETL, noting that ABC co-developer Lambert Meertens had "spent a year with the SETL group at NYU before coming up with the final ABC design".
+On 12 July 2018, Van Rossum announced that he would be stepping down from the position of BDFL of the Python programming language.
+"Computer Programming for Everybody" proposal
+In 1999, Van Rossum submitted a funding proposal to DARPA called "Computer Programming for Everybody", in which he further defined his goals for Python:
+ An easy and intuitive language just as powerful as major competitors
+ Open source, so anyone can contribute to its development
+ Code that is as understandable as plain English
+ Suitability for everyday tasks, allowing for short development times
+In 2019, Python became the second most popular language on GitHub, the largest source code management website on the internet, second only to JavaScript. According to a programming language popularity survey it is consistently among the top 10 most mentioned languages in job postings. Furthermore, Python has been among the 10 most popular programming languages every year since 2004 according to the TIOBE Programming Community Index and got the number one spot on the index in October 2021.
+Awards
+ At the 2002 FOSDEM conference in Brussels, Van Rossum received the 2001 Award for the Advancement of Free Software from the Free Software Foundation (FSF) for his work on Python.
+ In May 2003, he received a NLUUG Award.
+ In 2006, he was recognized as a Distinguished Engineer by the Association for Computing Machinery.
+ In 2018, he was made a Fellow of the Computer History museum.
+ In 2019, he was awarded the honorary title of Dijkstra Fellow by CWI.
+References
+External links
+ Guido van Rossum. The History of Python 
+ Guido van Rossum. Neopythonic: Ramblings 
+ Computer Programming for Everybody
+ Guido van Rossum Interview on FLOSS Weekly
+ Guido van Rossum interview - Workspiration.org
+ Guido van Rossum on Python Interview - Computerworld
+ Guido van Rossum Run your web applications on Google's infrastructure — Google App Engine technical talk at Stanford University. (video archive)
+  Computer History Museum
+  Computer History Museum
+Category:1956 births
+Category:Computer programmers
+Category:Dutch computer programmers
+Category:Dutch computer scientists
+Category:Dutch emigrants to the United States
+Category:Free software programmers
+Category:Google employees
+Category:Living people
+Category:Members of the Open Source Initiative board of directors
+Category:Microsoft employees
+Category:People from Belmont, California
+Category:People from Haarlem
+Category:Programming language designers
+Category:Python (programming language) people
+Category:University of Amsterdam alumni
+Category:Dutch software engineers
+"""
+

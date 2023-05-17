@@ -3,56 +3,49 @@ import mwparserfromhell
 from pandas import *
 import os
 
-folder = 'WikiCSV'
-outputFile = 'DataSet.text'
-doWrite = False
+input_sheet = 'wikipedia_sheet.csv'
+output_file = 'output.text'
 
-#open file
-f = open(outputFile, 'w') # 'w' for overwrite, 'a' for append
+# read the csv file
+data = read_csv(input_sheet)
+data = data['==='].tolist()
+n_rows = len(data)
 
-#loop though files in folder
-for file in os.listdir(folder) :
-    data = read_csv(file)
-    #get all data from colum in csv
-    #Note: Top row of file must be "===,"
-    data = data['==='].tolist()
-    nRows = len(data)
+#open output file
+f = open(output_file, 'w') # 'w' for overwrite, 'a' for append
+
+# loop through all the cells in csv file
+for cell, i in zip(data, range(len(data))) :
+    #format json
+    response = requests.get(
+        'https://en.wikipedia.org/w/api.php',
+        params={
+            'action': 'query',
+            'format': 'json',
+            'titles': cell,
+            'prop': 'revisions',
+            'rvprop': 'content',
+        }
+    ).json()
     
-    counter = 1 #just to count number
+    #turn into readble text from json
+    page = next(iter(response['query']['pages'].values()))
+    try :
+        wikicode = page['revisions'][0]['*']
+        parsed_wikicode = mwparserfromhell.parse(wikicode)
+        output_text = parsed_wikicode.strip_code()
+    except KeyError :
+        print(f"# NO WIKIPEDIA PAGE FOR '{cell}'")
+        continue
     
-    for cell in data :
-        #format json
-        response = requests.get(
-            'https://en.wikipedia.org/w/api.php',
-            params={
-                'action': 'query',
-                'format': 'json',
-                'titles': cell,
-                'prop': 'revisions',
-                'rvprop': 'content',
-            }
-        ).json()
-        
-        #turn into readble text from json
-        page = next(iter(response['query']['pages'].values()))
-        try :
-            wikicode = page['revisions'][0]['*']
-            parsed_wikicode = mwparserfromhell.parse(wikicode)
-            text = parsed_wikicode.strip_code()
-        except KeyError :
-            print(f"NO WIKI FOR '{cell}'")
-            continue
-        
-        #removes lines that are emtipy
-        text = '\n'.join([line for line in text.splitlines() if line.strip() != ''])
-        
-        #writes to file
-        if doWrite == True :
-            f.write(f"From \"{cell}\" ==> \"\"\"\n")
-            f.write(text)
-            f.write(f"\n\"\"\"")
-            f.write("\n\n")
-        
-        #for ui
-        print(f"Finshed {cell:<5} from {file:<5} | #{counter} of {nRows}")
-        counter += 1
+    # removes lines that are empty
+    output_text = '\n'.join([line for line in output_text.splitlines() if line.strip() != ''])
+    
+    # writes to file
+    f.write(f'From \"{cell}\" ==> \"\"\"\n')
+    f.write(output_text)
+    f.write(f'\n\"\"\"')
+    f.write('\n\n')
+    
+    # for ui
+    print(f'# Wrote : {cell:<5} | #{i} of {n_rows}')
