@@ -1,3 +1,6 @@
+// This is an example of what it will return
+// Please note that this file is cleared everytime ./buildData.sh is run
+
 From "Quantum computing" ==> """
 thumb|IBM Q System One, a quantum computer with 20 superconducting qubits
 A quantum computer is a computer that exploits quantum mechanical phenomena.
