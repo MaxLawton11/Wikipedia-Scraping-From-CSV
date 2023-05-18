@@ -1,4 +1,3 @@
 # Wikipedia-Scraping-From-CSV
  
- This program creates a large text file from Wikipedia articles. 
- `./buildData.sh`
+This program creates a large text file from Wikipedia articles. You can see a basic example of this by looking at the default contents of the `output.text` file. To run, add the names of the articles you want into the `wikipedia_sheet.csv` file, and run `./buildData.sh`. (Note: You do not need to add commas after your articles, but the csv file MUST start with `===,` in order for proper formatting)
