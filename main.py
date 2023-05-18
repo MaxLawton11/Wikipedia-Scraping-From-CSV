@@ -1,8 +1,8 @@
 import requests
 import mwparserfromhell
 from pandas import *
-import os
 
+# files to open
 input_sheet = 'wikipedia_sheet.csv'
 output_file = 'output.text'
 
@@ -11,12 +11,12 @@ data = read_csv(input_sheet)
 data = data['==='].tolist()
 n_rows = len(data)
 
-#open output file
+# open output file
 f = open(output_file, 'w') # 'w' for overwrite, 'a' for append
 
 # loop through all the cells in csv file
 for cell, i in zip(data, range(len(data))) :
-    #format json
+    # get response and formmat to json
     response = requests.get(
         'https://en.wikipedia.org/w/api.php',
         params={
@@ -28,7 +28,7 @@ for cell, i in zip(data, range(len(data))) :
         }
     ).json()
     
-    #turn into readble text from json
+    # turn into readble text from json
     page = next(iter(response['query']['pages'].values()))
     try :
         wikicode = page['revisions'][0]['*']
