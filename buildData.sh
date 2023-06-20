@@ -12,7 +12,7 @@ pip3 install mwparserfromhell
 pip3 install requests
 
 echo -e "# ${Green}Added all Required Dependencys${White}"
-echo -e "# ${Green}Compiling dataset:${White}"
+echo -e "# ${Green}Compiling data:${White}"
 
 python3 main.py
 
