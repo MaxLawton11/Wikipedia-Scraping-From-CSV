@@ -1,5 +1,5 @@
 // This is an example of what it will return
-// Please note that this file is cleared everytime ./buildData.sh is run
+// Please note that this file is cleared everytime ./buildData.sh or python main.py is run
 
 From "Quantum computing" ==> """
 thumb|IBM Q System One, a quantum computer with 20 superconducting qubits
